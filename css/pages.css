@@ -1,0 +1,262 @@
+/* ============================================================
+   PAGES — layout for the project case-study pages + the shared
+   Figma Footer component. Transcribed from Figma page 0:1:
+   Page Hero, Project section (header · mockups · CSO · gallery),
+   closing CTA, Footer. Measurements are the Figma values.
+   ============================================================ */
+
+/* ---- Shared page-width wrapper -------------------------------- */
+.wrap {
+  max-width: calc(var(--page-max) + 2 * var(--page-pad));
+  margin-inline: auto;
+  padding-inline: var(--page-pad);
+}
+
+/* ============================================================
+   PROJECT PAGE HERO — Figma "Page Hero": pt140 pb72, gap24, left
+   ============================================================ */
+.page-hero {
+  max-width: calc(var(--page-max) + 2 * var(--page-pad));
+  margin-inline: auto;
+  padding: 140px var(--page-pad) 72px;
+  display: grid;
+  gap: 24px;
+  justify-items: start;
+}
+.page-hero__title {
+  font-size: var(--fs-display-l); line-height: var(--lh-display-l);
+  letter-spacing: -0.025em; font-weight: 600;
+  max-width: 960px;
+}
+.page-hero__desc {
+  color: var(--text-secondary);
+  font-size: var(--fs-body-l); line-height: var(--lh-body-l);
+  max-width: 720px;
+}
+
+/* ============================================================
+   PROJECT SECTION — Figma "Project — …": py96 px64, gap48, top rule
+   ============================================================ */
+.proj {
+  max-width: calc(var(--page-max) + 2 * var(--page-pad));
+  margin-inline: auto;
+  padding: 96px var(--page-pad);
+  border-top: 1px solid var(--border-subtle);
+  display: grid;
+  gap: 48px;
+}
+.proj__header { display: grid; gap: 24px; }
+.proj__title-row {
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+}
+.proj__title {
+  font-size: var(--fs-h2); line-height: var(--lh-h2);
+  letter-spacing: -0.015em; font-weight: 600;
+}
+/* meta — Figma "meta": 3 columns, itemSpacing 80, each label+value gap6 */
+.proj__meta { display: flex; gap: 80px; flex-wrap: wrap; }
+.proj__meta > div { display: grid; gap: 6px; }
+.proj__meta dt {
+  font-size: var(--fs-label-s); font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+.proj__meta dd { font-size: var(--fs-body-s); color: var(--text-primary); }
+
+/* challenge · solution · outcome — 3-col, gap32, accent labels */
+.cso { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+.cso--4 { grid-template-columns: repeat(4, 1fr); }
+.cso > div { display: grid; gap: 8px; align-content: start; }
+.cso dt {
+  font-size: var(--fs-label-s); font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--accent);
+}
+.cso dd {
+  font-size: var(--fs-body-s); line-height: var(--lh-body-s);
+  color: var(--text-secondary);
+}
+
+/* mockups + galleries — full-bleed within content; grid rows, gap32.
+   Exported instances already carry the Figma crop, so natural aspect
+   reproduces the frame. */
+.proj__visual { display: grid; gap: 32px; }
+.proj__row { display: grid; gap: 32px; }
+.proj__row--2 { grid-template-columns: repeat(2, 1fr); }
+.proj__row--3 { grid-template-columns: repeat(3, 1fr); }
+.proj__shot {
+  position: relative;
+  border-radius: var(--r-md);
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-secondary);
+  box-shadow: var(--shadow-card);
+}
+.proj__shot img {
+  width: 100%; height: auto; display: block;
+  transition: transform 1200ms var(--ease-out);
+}
+.proj__shot--mockup { border: 0; background: transparent; box-shadow: none; }
+.proj__caption {
+  margin-top: 12px;
+  font-size: var(--fs-label-s); line-height: var(--lh-label-s);
+  color: var(--text-tertiary);
+  letter-spacing: 0.02em;
+}
+
+/* section intro paragraph (used by Creative Lab section headers) */
+.proj__lede {
+  color: var(--text-secondary);
+  font-size: var(--fs-body-l); line-height: var(--lh-body-l);
+  max-width: 720px;
+}
+
+/* callout — small labeled note (e.g. Creative Brief) */
+.callout {
+  display: grid; gap: 8px;
+  padding: 24px 28px;
+  border-left: 2px solid var(--accent);
+  background: var(--bg-elevated);
+  border-radius: 0 var(--r-md) var(--r-md) 0;
+}
+.callout dt {
+  font-size: var(--fs-label-s); font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent);
+}
+.callout dd { font-size: var(--fs-body); line-height: var(--lh-body); color: var(--text-primary); }
+
+/* ============================================================
+   CREATIVE LAB — workflow pipeline · toolkit · principles
+   ============================================================ */
+.cl-flow { display: grid; gap: 12px; justify-items: center; }
+.cl-flow__step {
+  width: 100%; max-width: 560px;
+  display: grid; gap: 12px; justify-items: center; text-align: center;
+  padding: 24px 28px;
+  border: 1px solid var(--border-subtle); border-radius: var(--r-md);
+  background: var(--bg-card);
+}
+.cl-flow__step h3 { font-size: var(--fs-title); line-height: var(--lh-title); font-weight: 600; }
+.cl-flow__tools { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+.cl-flow__arrow { color: var(--text-tertiary); font-size: 18px; line-height: 1; }
+
+.cl-toolkit { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
+.cl-toolkit__col { display: grid; gap: 14px; align-content: start; }
+
+.cl-principles { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+.cl-principle {
+  display: grid; grid-template-columns: auto 1fr; gap: 20px; align-items: start;
+  padding: 24px 28px;
+  border: 1px solid var(--border-subtle); border-radius: var(--r-md);
+  background: var(--bg-elevated);
+}
+.cl-principle b { font-size: var(--fs-h3); line-height: 1; color: var(--accent); font-weight: 600; }
+.cl-principle p { color: var(--text-secondary); font-size: var(--fs-body); line-height: var(--lh-body); }
+
+@media (max-width: 880px) {
+  .cl-toolkit { grid-template-columns: repeat(2, 1fr); }
+  .cl-principles { grid-template-columns: 1fr; }
+}
+
+/* ============================================================
+   CLOSING CTA — Figma "CTA": pt120 pb140, centered, top rule, gap24
+   ============================================================ */
+.page-cta {
+  max-width: calc(var(--page-max) + 2 * var(--page-pad));
+  margin-inline: auto;
+  padding: 120px var(--page-pad) 140px;
+  border-top: 1px solid var(--border-subtle);
+  display: grid; gap: 24px;
+  justify-items: center; text-align: center;
+}
+.page-cta__title {
+  font-size: var(--fs-h2); line-height: var(--lh-h2);
+  letter-spacing: -0.015em; font-weight: 600;
+}
+.page-cta__sub {
+  color: var(--text-secondary);
+  font-size: var(--fs-body-l); line-height: var(--lh-body-l);
+  max-width: 640px;
+}
+.page-cta__actions { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; padding-top: 8px; }
+
+/* ============================================================
+   FIGMA FOOTER COMPONENT (8:31) — py96, cta-row · divider · legal-row
+   Appears on every page except Contact (which has its own bottom-bar).
+   ============================================================ */
+.site-footer {
+  max-width: calc(var(--page-max) + 2 * var(--page-pad));
+  margin-inline: auto;
+  padding: 96px var(--page-pad);
+  border-top: 1px solid var(--border-subtle);
+  display: grid; gap: 64px;
+}
+.site-footer__cta {
+    position: relative;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 48px;
+    flex-wrap: wrap;
+
+    overflow: hidden;
+
+    isolation: isolate;
+}
+.site-footer__streams {
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    overflow: hidden;
+
+    z-index: 0;
+
+}
+.site-footer__cta-text { position: relative; z-index: 1; display: grid; gap: 16px; max-width: 720px; }
+.site-footer__cta-title {
+  font-size: var(--fs-display-l); line-height: var(--lh-display-l);
+  letter-spacing: -0.025em; font-weight: 600;
+}
+.site-footer__cta-sub {
+  color: var(--text-secondary);
+  font-size: var(--fs-body-l); line-height: var(--lh-body-l);
+  max-width: 648px;
+}
+.site-footer__actions { position: relative; z-index: 1; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; isolation: isolate;}
+.site-footer__legal {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 24px; flex-wrap: wrap;
+}
+.site-footer__legal p { font-size: var(--fs-body-s); color: var(--text-tertiary); }
+.site-footer__links { display: flex; gap: 32px; }
+.site-footer__links a {
+  font-size: var(--fs-label-s); line-height: var(--lh-label-s);
+  font-weight: 500; letter-spacing: 0.02em;
+  color: var(--text-secondary);
+  transition: color var(--t-fast) var(--ease-out);
+}
+.site-footer__links a:hover { color: var(--text-primary); }
+
+/* ---- Responsive ---------------------------------------------- */
+@media (max-width: 1100px) {
+  .cso--4 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 880px) {
+  .page-hero { padding-top: 120px; }
+  .proj { padding-top: 72px; padding-bottom: 72px; gap: 40px; }
+  .cso { grid-template-columns: 1fr; gap: 24px; }
+  .proj__row--2, .proj__row--3 { grid-template-columns: 1fr; }
+  .proj__meta { gap: 32px; }
+  .site-footer__cta { flex-direction: column; gap: 32px; }
+  .page-cta { padding-top: 96px; padding-bottom: 120px; }
+}
+@media (max-width: 480px) {
+  .page-cta__actions { width: 100%; }
+  .page-cta__actions .btn { width: 100%; justify-content: center; }
+  .site-footer__legal { flex-direction: column; align-items: flex-start; }
+}

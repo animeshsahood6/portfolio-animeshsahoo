@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Animesh Sahoo - Creative Engineer, Visual Designer and UI Designer. Interfaces, campaigns and AI-assisted creative systems for brands like BMW, AT&T, Volkswagen and Royal Canin.">
+  <meta name="author" content="Animesh Sahoo">
+  <meta name="theme-color" content="#0D0D0D">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Animesh Sahoo - Creative Engineer · Visual Designer · UI Designer">
+  <meta property="og:description" content="Designing interfaces, campaigns and digital experiences that people remember.">
+
+  <title>Animesh Sahoo - Creative Engineer · Visual Designer · UI Designer</title>
+
+  <link rel="preconnect" href="https://rsms.me" crossorigin>
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/sections.css">
+  <link rel="stylesheet" href="css/pages.css">
+  <link rel="stylesheet" href="css/atmosphere.css">
+</head>
+<body data-loading>
+
+  <!-- ============ ATMOSPHERE - Experience layer (never affects layout) ============ -->
+  <div class="atmos" aria-hidden="true">
+    <div class="atmos__ambient"></div>
+    <div class="atmos__travel" id="travelLight"></div>
+  </div>
+  <div class="vignette" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- ============ PRELOADER ============ -->
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader__mark">animesh<span class="dot">•</span></div>
+    <div class="preloader__bar"><span id="preloaderBar"></span></div>
+  </div>
+
+  <!-- ============ CURSOR / PROGRESS ============ -->
+  <div class="cursor" id="cursor" aria-hidden="true">
+    <div class="cursor__dot"></div>
+    <div class="cursor__ring"></div>
+    <div class="cursor__label" id="cursorLabel"></div>
+  </div>
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+  <!-- ============ NAV - Figma: Navigation component ============ -->
+  <header class="nav" id="nav">
+    <a class="nav__logo" href="index.html" data-magnetic>animesh<span class="dot">•</span></a>
+    <div class="nav__right">
+      <nav class="nav__links" aria-label="Primary">
+        <a href="#projects" data-nav-link>Projects</a>
+        <a href="creative-lab.html">Lab</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <a class="nav__cta" href="contact.html" data-magnetic>Let’s talk</a>
+    </div>
+    <button class="nav__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span>
+    </button>
+  </header>
+
+  <div class="nav-drawer" id="navDrawer" aria-hidden="true">
+    <nav aria-label="Mobile">
+      <a href="#projects">Projects</a>
+      <a href="creative-lab.html">Lab</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+
+  <main id="top">
+
+    <!-- ============ HERO - Figma: Landing / Hero ============ -->
+    <section class="hero" id="home" aria-label="Introduction">
+      <div class="hero__glow" aria-hidden="true"></div>
+      <div class="hero__atmos" aria-hidden="true">
+        <div class="hero__spot"></div>
+        <div class="hero__haze"></div>
+        <div class="hero__orb hero__orb--1"></div>
+        <div class="hero__orb hero__orb--2"></div>
+        <div class="hero__ring">
+          <div class="orbiter" style="--od:34s; --odelay:0s; --osize:6px"></div>
+          <div class="orbiter orbiter--rev" style="--od:46s; --odelay:-8s; --osize:4px"></div>
+          <div class="orbiter orbiter--outer" style="--od:58s; --odelay:-20s; --osize:5px"></div>
+          <div class="orbiter orbiter--outer orbiter--rev" style="--od:72s; --odelay:-5s; --osize:3px"></div>
+        </div>
+        <div class="hero__hairlines">
+    <span></span>
+    <span></span>
+</div>
+<div class="hero__streams"></div>
+      </div>
+      <p class="overline reveal" data-reveal>Creative Engineer · Visual Designer · UI Designer</p>
+      <h1 class="hero__title" data-split>Animesh Sahoo</h1>
+      <p class="hero__tagline reveal" data-reveal data-reveal-delay="500">Designing interfaces, campaigns and digital experiences that people <span class="rword" data-rotate="remember, experience, admire, revisit, share, feel, discover">remember</span></p>
+      <p class="hero__intro reveal" data-reveal data-reveal-delay="620">I combine visual design, UI, branding and creative workflows to create interfaces, campaigns and digital experiences that are thoughtful, scalable and visually engaging.</p>
+      <div class="hero__actions reveal" data-reveal data-reveal-delay="740">
+        <a class="btn btn--primary" href="#projects" data-magnetic>View selected work <span class="btn__arrow">→</span></a>
+        <a class="btn btn--ghost" href="about.html" data-magnetic>Explore my story <span class="btn__arrow">→</span></a>
+      </div>
+    </section>
+
+    <!-- ============ BRANDS MARQUEE - credibility strip ============ -->
+    <section class="brands-strip reveal" data-reveal aria-label="Brands worked with">
+      <div class="marquee">
+        <div class="marquee__track">
+          <span>PHILIPS</span><span>HERSHEY’S</span><span>BMW</span><span>AT&amp;T</span><span>CAMPBELL’S</span>
+          <span>LIPTON</span><span>VOLKSWAGEN</span><span>ATHLETA</span><span>HILTON</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SELECTED WORK - Figma: Landing / Selected Work ============ -->
+    <section class="section work" id="projects" aria-label="Selected work">
+      <header class="section__head">
+        <p class="overline reveal" data-reveal>Projects</p>
+        <h2 class="section__title" data-split>Selected work</h2>
+        <p class="section__desc reveal" data-reveal>A curated selection of digital products, marketing campaigns and AI-assisted creative explorations.</p>
+      </header>
+
+      <div class="work-grid" id="workGrid">
+
+        <a class="work-card reveal" data-reveal href="website-design.html" aria-label="Website Design">
+          <figure class="work-card__media" data-cover="website-design"><figcaption class="visually-hidden">Website design cover</figcaption></figure>
+          <div class="work-card__body">
+            <div class="work-card__meta"><span class="tag">UI/UX · Web</span><span class="work-card__arrow" aria-hidden="true">→</span></div>
+            <h3>Website Design</h3>
+            <p>Marketing websites and product interfaces designed for clarity, usability and conversion.</p>
+          </div>
+        </a>
+
+        <a class="work-card reveal" data-reveal href="scalable-ads.html" aria-label="Scalable Ads">
+          <figure class="work-card__media" data-cover="scalable-ads"></figure>
+          <div class="work-card__body">
+            <div class="work-card__meta"><span class="tag">Performance Marketing</span><span class="work-card__arrow" aria-hidden="true">→</span></div>
+            <h3>Scalable Ads</h3>
+            <p>Scalable creative systems designed for consistent performance across formats and campaigns.</p>
+          </div>
+        </a>
+
+        <a class="work-card reveal" data-reveal href="pitch-works.html" aria-label="Pitch Works">
+          <figure class="work-card__media" data-cover="pitch-works"></figure>
+          <div class="work-card__body">
+            <div class="work-card__meta"><span class="tag">Narrative · Decks</span><span class="work-card__arrow" aria-hidden="true">→</span></div>
+            <h3>Pitch Works</h3>
+            <p>Investor and sales narratives designed to win the room.</p>
+          </div>
+        </a>
+
+        <a class="work-card reveal" data-reveal href="social-media.html" aria-label="Social Media">
+          <figure class="work-card__media" data-cover="social-media"></figure>
+          <div class="work-card__body">
+            <div class="work-card__meta"><span class="tag">Content · Brand</span><span class="work-card__arrow" aria-hidden="true">→</span></div>
+            <h3>Social Media</h3>
+            <p>Social campaigns, carousels and branded content designed for engagement and consistency.</p>
+          </div>
+        </a>
+
+        <a class="work-card reveal" data-reveal href="meta-ads.html" aria-label="Meta Ads">
+          <figure class="work-card__media" data-cover="meta-ads"></figure>
+          <div class="work-card__body">
+            <div class="work-card__meta"><span class="tag">Paid Social</span><span class="work-card__arrow" aria-hidden="true">→</span></div>
+            <h3>Meta Ads</h3>
+            <p>Performance-focused creatives designed specifically for Meta advertising campaigns.</p>
+          </div>
+        </a>
+
+        <a class="work-card reveal" data-reveal href="creative-lab.html" aria-label="Creative Lab">
+          <figure class="work-card__media" data-cover="creative-lab"></figure>
+          <div class="work-card__body">
+            <div class="work-card__meta"><span class="tag">Design × AI</span><span class="work-card__arrow" aria-hidden="true">→</span></div>
+            <h3>Creative Lab</h3>
+            <p>Personal explorations in creative visual design, cinematic storytelling and interface concepts.</p>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- ============ CAPABILITIES - Figma: Landing / Skills ============ -->
+    <section class="section skills" aria-label="Capabilities">
+      <header class="section__head">
+        <p class="overline reveal" data-reveal>Capabilities</p>
+        <h2 class="section__title" data-split>Design disciplines that shape how I approach every project.</h2>
+        <p class="section__desc reveal" data-reveal>Design across products, brands and marketing - with creative exploration, speed and execution.</p>
+      </header>
+      <ul class="chips chips--skills reveal" data-reveal>
+        <li>UI/UX Design</li><li>Product Design</li><li>Visual Design</li><li>Marketing Design</li>
+        <li>Brand Systems</li><li>Design Systems</li><li>AI Workflows</li><li>AI-Assisted Visuals</li>
+        <li>Creative Direction</li><li>Motion &amp; Interaction</li><li>Figma</li>
+      </ul>
+    </section>
+
+  </main>
+
+  <!-- ============ FOOTER - Figma: Footer component (8:31) ============ -->
+  <footer class="site-footer">
+    <div class="site-footer__cta">
+      <div class="site-footer__streams" aria-hidden="true"></div>
+      <div class="site-footer__cta-text">
+        <p class="overline">Contact</p>
+        <h2 class="site-footer__cta-title" data-split>Let’s work together.</h2>
+        <p class="site-footer__cta-sub">Helping teams create thoughtful digital experiences, brands and campaigns.</p>
+      </div>
+      <div class="site-footer__actions">
+        <a
+  class="btn btn--primary"
+  href="https://mail.google.com/mail/?view=cm&fs=1&to=animeshsahood6@gmail.com&su=Let's%20Connect"
+  target="_blank"
+  rel="noopener noreferrer"
+  data-magnetic>
+  Email <span class="btn__arrow">→</span>
+</a>
+        <a class="btn btn--secondary" href="https://www.linkedin.com/in/animeshsahoo/" target="_blank" rel="noopener noreferrer" data-magnetic>LinkedIn <span class="btn__arrow">↗</span></a>
+        <a class="btn btn--ghost" href="assets/resume/AnimeshSahoo_Resume_2026.pdf" target="_blank" rel="noopener noreferrer" data-magnetic>View Résumé <span class="btn__arrow">→</span></a>
+      </div>
+    </div>
+    <div class="site-footer__legal">
+      <p>© 2026 Animesh Sahoo - Designed with curiosity. Crafted with AI. Refined by human judgment.</p>
+      <nav class="site-footer__links" aria-label="Footer">
+        <a href="#projects">Projects</a>
+        <a href="creative-lab.html">Lab</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

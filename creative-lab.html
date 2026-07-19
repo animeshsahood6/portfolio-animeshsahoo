@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Creative Lab - designing beyond the brief. Concepts, systems, experiments and AI-assisted workflows: Fable OS, AI cinematic storytelling, dashboard concepts and a connected creative pipeline.">
+  <meta name="author" content="Animesh Sahoo">
+  <meta name="theme-color" content="#0D0D0D">
+  <title>Creative Lab - Animesh Sahoo</title>
+
+  <link rel="preconnect" href="https://rsms.me" crossorigin>
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/sections.css">
+  <link rel="stylesheet" href="css/pages.css">
+  <link rel="stylesheet" href="css/atmosphere.css">
+</head>
+<body data-loading>
+
+  <div class="atmos" aria-hidden="true">
+    <div class="atmos__ambient"></div>
+    <div class="atmos__travel" id="travelLight"></div>
+  </div>
+  <div class="vignette" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader__mark">animesh<span class="dot">•</span></div>
+    <div class="preloader__bar"><span id="preloaderBar"></span></div>
+  </div>
+
+  <div class="cursor" id="cursor" aria-hidden="true">
+    <div class="cursor__dot"></div>
+    <div class="cursor__ring"></div>
+    <div class="cursor__label" id="cursorLabel"></div>
+  </div>
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+  <header class="nav" id="nav">
+    <a class="nav__logo" href="index.html" data-magnetic>animesh<span class="dot">•</span></a>
+    <div class="nav__right">
+      <nav class="nav__links" aria-label="Primary">
+        <a href="index.html#projects">Projects</a>
+        <a href="creative-lab.html" class="is-active">Lab</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <a class="nav__cta" href="contact.html" data-magnetic>Let’s talk</a>
+    </div>
+    <button class="nav__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span>
+    </button>
+  </header>
+
+  <div class="nav-drawer" id="navDrawer" aria-hidden="true">
+    <nav aria-label="Mobile">
+      <a href="index.html#projects">Projects</a>
+      <a href="creative-lab.html">Lab</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+
+  <main id="top">
+
+    <!-- 01 · HERO -->
+    <section class="page-hero">
+      <p class="overline reveal" data-reveal>Creative Lab</p>
+      <h1 class="page-hero__title" data-split>Designing Beyond the Brief.</h1>
+      <p class="page-hero__desc reveal" data-reveal>Great creative doesn’t begin in Photoshop. It begins with the right question. This is where concepts, systems, experiments, and AI-assisted workflows come together before they become finished work.</p>
+      <p class="overline reveal" data-reveal>UI · Brand · Motion · Marketing</p>
+    </section>
+
+    <!-- 02 · PERSONAL CONCEPT - Fable OS -->
+    <section class="proj">
+      <header class="proj__header">
+        <p class="overline reveal" data-reveal>02 · Personal Concept</p>
+        <h2 class="proj__title" data-split>Fable OS</h2>
+        <p class="proj__lede reveal" data-reveal>A personal AI operating system designed to orchestrate creative workflows, automate repetitive tasks, and turn fragmented tools into one intelligent workspace.</p>
+      </header>
+      <div class="proj__visual reveal" data-reveal>
+        <div class="proj__shot proj__shot--mockup"><img src="assets/projects/creative-lab/cl-fable-browser.png" alt="Fable OS interface concept in a browser mockup" loading="lazy"></div>
+        <div class="proj__shot proj__shot--mockup"><img src="assets/projects/creative-lab/cl-fable-uigrid.png" alt="Fable OS UI grid explorations" loading="lazy"></div>
+        <div class="proj__shot proj__shot--mockup"><img src="assets/projects/creative-lab/cl-fable-responsive.png" alt="Fable OS interface detail, full width" loading="lazy"></div>
+      </div>
+    </section>
+
+    <!-- 03 · AI CINEMATIC STORYTELLING -->
+    <section class="proj">
+      <header class="proj__header">
+        <p class="overline reveal" data-reveal>03 · AI Cinematic Storytelling</p>
+        <h2 class="proj__title" data-split>Autumn - an AI-assisted launch film</h2>
+        <p class="proj__lede reveal" data-reveal>A cinematic launch film created using AI-assisted storyboarding, image generation, motion design, and editing - proving how modern creative pipelines can accelerate production without sacrificing quality.</p>
+      </header>
+      <dl class="callout reveal" data-reveal>
+        <dt>Creative Brief</dt>
+        <dd>A launch film for Autumn Villas - cinematic, warm, grounded in place.</dd>
+      </dl>
+      <div class="proj__visual reveal" data-reveal>
+        <div class="proj__shot proj__shot--mockup"><img src="assets/projects/creative-lab/cl-autumn-realism.png" alt="Adding realism - original render to AI" loading="lazy"></div>
+        <div class="proj__shot proj__shot--mockup"><img src="assets/projects/creative-lab/cl-autumn-storyboard.png" alt="Multi-angle generations from a single elevation" loading="lazy"></div>
+        <div class="proj__shot proj__shot--mockup"><img src="assets/projects/creative-lab/cl-autumn-sequence.png" alt="Render to video sequence - original render, AI-generated shot, final clip" loading="lazy"></div>
+        <div class="proj__shot proj__shot--mockup"><img src="assets/projects/creative-lab/cl-autumn-teaser.png" alt="Final teaser poster" loading="lazy"></div>
+      </div>
+    </section>
+
+    <!-- 04 · DASHBOARD EXPLORATION -->
+    <section class="proj">
+      <header class="proj__header">
+        <p class="overline reveal" data-reveal>04 · Dashboard Exploration</p>
+        <h2 class="proj__title" data-split>Real Estate Intelligence Dashboard</h2>
+        <p class="proj__lede reveal" data-reveal>A dashboard concept focused on simplifying construction, sales, and operational data into a single decision-making interface.</p>
+      </header>
+      <div class="proj__visual reveal" data-reveal>
+        <div class="proj__shot proj__shot--mockup"><img src="assets/projects/creative-lab/cl-dash-browser.png" alt="Real estate intelligence dashboard in a browser mockup" loading="lazy"></div>
+        <div class="proj__shot proj__shot--mockup"><img src="assets/projects/creative-lab/cl-dash-screens.png" alt="Supporting dashboard screens" loading="lazy"></div>
+        <div class="proj__shot proj__shot--mockup"><img src="assets/projects/creative-lab/cl-dash-ui.png" alt="Key UI elements" loading="lazy"></div>
+      </div>
+    </section>
+
+    <!-- 05 · CREATIVE WORKFLOW -->
+    <section class="proj">
+      <header class="proj__header">
+        <p class="overline reveal" data-reveal>05 · Creative Workflow</p>
+        <h2 class="proj__title" data-split>From Idea to Execution</h2>
+        <p class="proj__lede reveal" data-reveal>One connected pipeline - from research to final deliverable.</p>
+      </header>
+      <div class="cl-flow reveal" data-reveal>
+        <div class="cl-flow__step"><h3>Research</h3></div>
+        <span class="cl-flow__arrow" aria-hidden="true">↓</span>
+        <div class="cl-flow__step"><h3>Concept Development</h3><ul class="chips cl-flow__tools"><li>ChatGPT</li><li>Claude</li><li>Gemini</li></ul></div>
+        <span class="cl-flow__arrow" aria-hidden="true">↓</span>
+        <div class="cl-flow__step"><h3>Image Generation</h3><ul class="chips cl-flow__tools"><li>ChatGPT</li><li>Gemini</li></ul></div>
+        <span class="cl-flow__arrow" aria-hidden="true">↓</span>
+        <div class="cl-flow__step"><h3>Creative Refinement</h3><ul class="chips cl-flow__tools"><li>Photoshop</li><li>Lightroom</li></ul></div>
+        <span class="cl-flow__arrow" aria-hidden="true">↓</span>
+        <div class="cl-flow__step"><h3>Interface Design</h3><ul class="chips cl-flow__tools"><li>Figma</li></ul></div>
+        <span class="cl-flow__arrow" aria-hidden="true">↓</span>
+        <div class="cl-flow__step"><h3>Motion</h3><ul class="chips cl-flow__tools"><li>Premiere Pro</li><li>After Effects</li></ul></div>
+        <span class="cl-flow__arrow" aria-hidden="true">↓</span>
+        <div class="cl-flow__step"><h3>Final Deliverable</h3></div>
+      </div>
+    </section>
+
+    <!-- 06 · CREATIVE TOOLKIT -->
+    <section class="proj">
+      <header class="proj__header">
+        <p class="overline reveal" data-reveal>06 · Creative Toolkit</p>
+        <h2 class="proj__title" data-split>Tools I Reach For</h2>
+      </header>
+      <div class="cl-toolkit reveal" data-reveal>
+        <div class="cl-toolkit__col">
+          <p class="overline">AI</p>
+          <ul class="chips"><li>ChatGPT</li><li>Claude</li><li>Gemini</li><li>Midjourney</li><li>Leonardo AI</li></ul>
+        </div>
+        <div class="cl-toolkit__col">
+          <p class="overline">Design</p>
+          <ul class="chips"><li>Figma</li><li>Photoshop</li><li>Illustrator</li></ul>
+        </div>
+        <div class="cl-toolkit__col">
+          <p class="overline">Motion</p>
+          <ul class="chips"><li>Premiere Pro</li><li>After Effects</li></ul>
+        </div>
+        <div class="cl-toolkit__col">
+          <p class="overline">Development</p>
+          <ul class="chips"><li>Cursor</li><li>VS Code</li><li>GitHub</li></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 07 · DESIGN PHILOSOPHY -->
+    <section class="proj">
+      <header class="proj__header">
+        <p class="overline reveal" data-reveal>07 · Design Philosophy</p>
+        <h2 class="proj__title" data-split>What Guides My Work</h2>
+      </header>
+      <div class="cl-principles reveal" data-reveal>
+        <div class="cl-principle"><b>01</b><p>Strategy before aesthetics. Every decision should solve a problem.</p></div>
+        <div class="cl-principle"><b>02</b><p>AI amplifies creativity. It speeds execution, not thinking.</p></div>
+        <div class="cl-principle"><b>03</b><p>Build systems, not one-offs. Great brands scale through consistency.</p></div>
+        <div class="cl-principle"><b>04</b><p>Every interaction should have intent. Design is communication, not decoration.</p></div>
+        <div class="cl-principle"><b>05</b><p>Always be iterating. Creative work is never static.</p></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER - Figma Footer component -->
+  <footer class="site-footer">
+    <div class="site-footer__cta">
+      <div class="site-footer__cta-text">
+        <p class="overline">Contact</p>
+        <h2 class="site-footer__cta-title" data-split>Let’s work together.</h2>
+        <p class="site-footer__cta-sub">Helping teams create thoughtful digital experiences, brands and campaigns.</p>
+      </div>
+      <div class="site-footer__actions">
+        <a
+  class="btn btn--primary"
+  href="https://mail.google.com/mail/?view=cm&fs=1&to=animeshsahood6@gmail.com&su=Let's%20Connect"
+  target="_blank"
+  rel="noopener noreferrer"
+  data-magnetic>
+  Email <span class="btn__arrow">→</span>
+</a>
+        <a class="btn btn--secondary" href="https://www.linkedin.com/in/animeshsahoo/" target="_blank" rel="noopener noreferrer" data-magnetic>LinkedIn <span class="btn__arrow">↗</span></a>
+        <a class="btn btn--ghost" href="assets/resume/AnimeshSahoo_Resume_2026.pdf" target="_blank" rel="noopener noreferrer" data-magnetic>View Résumé <span class="btn__arrow">→</span></a>
+      </div>
+    </div>
+    <div class="site-footer__legal">
+      <p>© 2026 Animesh Sahoo - Designed with curiosity. Crafted with AI. Refined by human judgment.</p>
+      <nav class="site-footer__links" aria-label="Footer">
+        <a href="index.html#projects">Projects</a>
+        <a href="creative-lab.html">Lab</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="About Animesh Sahoo - a multidisciplinary designer focused on branding, performance marketing, visual storytelling and AI-assisted creative systems.">
+  <meta name="author" content="Animesh Sahoo">
+  <meta name="theme-color" content="#0D0D0D">
+  <title>About - Animesh Sahoo</title>
+
+  <link rel="preconnect" href="https://rsms.me" crossorigin>
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/sections.css">
+  <link rel="stylesheet" href="css/pages.css">
+  <link rel="stylesheet" href="css/atmosphere.css">
+</head>
+<body data-loading>
+
+  <div class="atmos" aria-hidden="true">
+    <div class="atmos__ambient"></div>
+    <div class="atmos__travel" id="travelLight"></div>
+  </div>
+  <div class="vignette" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader__mark">animesh<span class="dot">•</span></div>
+    <div class="preloader__bar"><span id="preloaderBar"></span></div>
+  </div>
+
+  <div class="cursor" id="cursor" aria-hidden="true">
+    <div class="cursor__dot"></div>
+    <div class="cursor__ring"></div>
+    <div class="cursor__label" id="cursorLabel"></div>
+  </div>
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+  <header class="nav" id="nav">
+    <a class="nav__logo" href="index.html" data-magnetic>animesh<span class="dot">•</span></a>
+    <div class="nav__right">
+      <nav class="nav__links" aria-label="Primary">
+        <a href="index.html#projects">Projects</a>
+        <a href="creative-lab.html">Lab</a>
+        <a href="about.html" class="is-active">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <a class="nav__cta" href="contact.html" data-magnetic>Let’s talk</a>
+    </div>
+    <button class="nav__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span>
+    </button>
+  </header>
+
+  <div class="nav-drawer" id="navDrawer" aria-hidden="true">
+    <nav aria-label="Mobile">
+      <a href="index.html#projects">Projects</a>
+      <a href="creative-lab.html">Lab</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+
+  <main id="top">
+
+    <!-- ABOUT - Figma 08 · About / Intro -->
+    <section class="section about" id="about" aria-label="About Animesh">
+      <div class="about__grid">
+        <figure class="about__portrait reveal" data-reveal>
+          <img src="assets/profile.jpg" alt="Portrait of Animesh Sahoo" loading="lazy" width="520" height="640">
+        </figure>
+        <div class="about__body">
+          <p class="overline reveal" data-reveal>About</p>
+          <h2 class="about__title" data-split>Curiosity fuels everything I create.</h2>
+          <p class="about__lede reveal" data-reveal>I’m Animesh, a multidisciplinary designer focused on branding, performance marketing, visual storytelling, and AI-assisted creative systems. Over the past four years, I’ve worked across digital campaigns, real estate marketing, multimedia design, and product experiences - always combining strategy with execution.</p>
+          <p class="about__sub reveal" data-reveal>Today, I design integrated campaigns and AI-powered creative workflows at E-Infra, helping transform ideas into scalable visual systems across marketing, sales, and digital experiences.</p>
+          <div class="about__stats reveal" data-reveal>
+            <div class="stat-card"><strong data-count="4" data-suffix="+">4+</strong><span>Years of Experience</span></div>
+            <div class="stat-card"><strong data-count="80" data-suffix="+">80+</strong><span>Projects shipped</span></div>
+            <div class="stat-card"><strong data-count="8" data-suffix="+">8+</strong><span>Industries served</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE - Figma About / Experience -->
+    <section class="section experience" id="resume" aria-label="Experience">
+      <p class="overline reveal" data-reveal>Experience</p>
+      <ol class="timeline">
+        <li class="timeline__item reveal" data-reveal>
+          <span class="timeline__year">Nov 2025 -</span>
+          <span class="timeline__marker" aria-hidden="true"><i></i></span>
+          <div class="timeline__content">
+            <h3>Graphic Designer · E-Infra</h3>
+            <p>Integrated campaigns, branding, AI-assisted production, performance marketing creatives.</p>
+          </div>
+        </li>
+        <li class="timeline__item reveal" data-reveal>
+          <span class="timeline__year">2024</span>
+          <span class="timeline__marker" aria-hidden="true"><i></i></span>
+          <div class="timeline__content">
+            <h3>Creative Engineer · Critical Mass (Omnicom)</h3>
+            <p>Global digital campaigns, multimedia design, enterprise learning experiences.</p>
+          </div>
+        </li>
+        <li class="timeline__item reveal" data-reveal>
+          <span class="timeline__year">2022</span>
+          <span class="timeline__marker" aria-hidden="true"><i></i></span>
+          <div class="timeline__content">
+            <h3>Multimedia Designer · EY GDS</h3>
+            <p>Interactive learning, motion graphics, corporate communication, digital experiences.</p>
+          </div>
+        </li>
+        <li class="timeline__item reveal" data-reveal>
+          <span class="timeline__year">2021</span>
+          <span class="timeline__marker" aria-hidden="true"><i></i></span>
+          <div class="timeline__content">
+            <h3>Graphic Designer · Stalkus Digital</h3>
+            <p>Brand identity, social media, performance creatives, digital marketing assets.</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- BRANDS - Figma About / Brands (now a seamless marquee) -->
+    <section class="section brands" id="brands" aria-label="Brands worked with">
+      <p class="overline reveal" data-reveal>Brands worked with</p>
+      <div class="marquee reveal" data-reveal>
+        <div class="marquee__track">
+          <span>PHILIPS</span><span>HERSHEY’S</span><span>BMW</span><span>AT&amp;T</span><span>CAMPBELL’S</span>
+          <span>LIPTON</span><span>VOLKSWAGEN</span><span>ATHLETA</span><span>HILTON</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOOLKIT - Figma About / Toolkit -->
+    <section class="section toolkit" aria-label="Skills and tools">
+      <div class="toolkit__group reveal" data-reveal>
+        <p class="overline">Skills</p>
+        <ul class="chips"><li>Brand Identity</li><li>Creative Direction</li><li>Visual Design</li><li>Marketing Design</li><li>Design Systems</li></ul>
+      </div>
+      <div class="toolkit__group reveal" data-reveal>
+        <p class="overline">Software</p>
+        <ul class="chips"><li>Figma</li><li>Photoshop</li><li>Illustrator</li><li>After Effects</li><li>Premiere Pro</li></ul>
+      </div>
+      <div class="toolkit__group reveal" data-reveal>
+        <p class="overline">AI Tools</p>
+        <ul class="chips"><li>ChatGPT</li><li>Claude</li><li>Gemini</li><li>Adobe Firefly</li><li>Leonardo AI</li><li>Midjourney</li></ul>
+      </div>
+    </section>
+
+    <!-- PHILOSOPHY - Figma About / Philosophy -->
+    <section class="section philosophy" aria-label="Design philosophy">
+      <blockquote class="reveal" data-reveal>
+        <p> “Taste is the last moat. AI multiplies output - judgement decides what ships.” </p>
+        <cite>- design philosophy</cite>
+      </blockquote>
+    </section>
+
+  </main>
+
+  <!-- FOOTER - Figma Footer component -->
+  <footer class="site-footer">
+    <div class="site-footer__cta">
+      <div class="site-footer__cta-text">
+        <p class="overline">Contact</p>
+        <h2 class="site-footer__cta-title" data-split>Let’s work together.</h2>
+        <p class="site-footer__cta-sub">Helping teams create thoughtful digital experiences, brands and campaigns.</p>
+      </div>
+      <div class="site-footer__actions">
+        <a
+  class="btn btn--primary"
+  href="https://mail.google.com/mail/?view=cm&fs=1&to=animeshsahood6@gmail.com&su=Let's%20Connect"
+  target="_blank"
+  rel="noopener noreferrer"
+  data-magnetic>
+  Email <span class="btn__arrow">→</span>
+</a>
+        <a class="btn btn--secondary" href="https://www.linkedin.com/in/animeshsahoo/" target="_blank" rel="noopener noreferrer" data-magnetic>LinkedIn <span class="btn__arrow">↗</span></a>
+        <a class="btn btn--ghost" href="assets/resume/AnimeshSahoo_Resume_2026.pdf" target="_blank" rel="noopener noreferrer" data-magnetic>View Résumé <span class="btn__arrow">→</span></a>
+      </div>
+    </div>
+    <div class="site-footer__legal">
+      <p>© 2026 Animesh Sahoo - Designed with curiosity. Crafted with AI. Refined by human judgment.</p>
+      <nav class="site-footer__links" aria-label="Footer">
+        <a href="index.html#projects">Projects</a>
+        <a href="creative-lab.html">Lab</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

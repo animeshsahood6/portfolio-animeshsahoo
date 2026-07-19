@@ -1,0 +1,757 @@
+/* ============================================================
+   ATMOSPHERE — EXPERIENCE LAYER ONLY (Layer 2).
+   Cinematic lighting, grain, vignette, traveling light and the
+   hero orbs/ring/hairlines. Every element here is fixed or
+   absolute + pointer-events:none and NEVER participates in
+   layout. Composition, spacing and alignment stay 100% Figma.
+   ============================================================ */
+
+/* ---- Behind-content light field (paints under the layout) ------- */
+.atmos {
+  position: fixed;
+  inset: 0;
+  z-index: -1;                 /* above the page background, below all content */
+  pointer-events: none;
+  overflow: hidden;
+  contain: strict;
+  /* page rhythm: the light field calms as the reader descends
+     (hero most alive → footer almost still). Driven by JS. */
+  opacity: var(--atmos-energy, 1);
+}
+
+/* Ambient key + fill lights — soft, slow drift */
+.atmos__ambient {
+    position: absolute;
+    inset: -25%;
+
+    background:
+        radial-gradient(circle at 18% 14%,
+            rgba(106,165,255,.13) 0%,
+            transparent 38%),
+
+        radial-gradient(circle at 84% 82%,
+            rgba(61,123,255,.10) 0%,
+            transparent 42%),
+
+        radial-gradient(circle at 74% 12%,
+            rgba(255,255,255,.045) 0%,
+            transparent 30%),
+
+        radial-gradient(circle at 42% 58%,
+            rgba(106,165,255,.05) 0%,
+            transparent 48%);
+
+    will-change: transform, opacity, filter;
+
+    animation:
+        atmos-drift 34s ease-in-out infinite alternate,
+        atmos-breathe 18s ease-in-out infinite;
+}
+
+@keyframes atmos-drift{
+
+    0%{
+        transform:
+            translate3d(0,0,0)
+            scale(1);
+    }
+
+    50%{
+        transform:
+            translate3d(-2%,-1%,0)
+            scale(1.04);
+    }
+
+    100%{
+        transform:
+            translate3d(2%,1.5%,0)
+            scale(1.08);
+    }
+
+}
+
+@keyframes atmos-breathe{
+
+    0%,100%{
+
+        opacity:.92;
+        filter:brightness(1);
+
+    }
+
+    50%{
+
+        opacity:1;
+        filter:brightness(1.18);
+
+    }
+
+}
+
+/* Traveling light — a slow raking highlight across the whole page */
+.atmos__travel {
+  position: absolute;
+  top: -40%;
+  left: 0;
+  width: 46%;
+  height: 180%;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    rgba(106, 165, 255, 0.05) 42%,
+    rgba(255, 255, 255, 0.045) 50%,
+    rgba(106, 165, 255, 0.05) 58%,
+    transparent 100%
+  );
+  filter: blur(46px);
+  will-change: transform, opacity;
+  animation: atmos-travel 28s linear infinite;
+}
+@keyframes atmos-travel {
+  0%   { transform: rotate(8deg) translateX(-140%); opacity: 0; }
+  12%  { opacity: 1; }
+  88%  { opacity: 1; }
+  100% { transform: rotate(8deg) translateX(320%); opacity: 0; }
+}
+
+/* ---- Front texture: vignette + film grain (over content) -------- */
+/* Both sit above the scrolling content but below the nav (1000),
+   scroll-progress (1500), overlay (2500) and cursor (4000). */
+.vignette,
+.grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+.vignette {
+  z-index: 400;
+  background: radial-gradient(125% 125% at 50% 40%, transparent 55%, rgba(0, 0, 0, 0.30) 100%);
+  mix-blend-mode: multiply;
+}
+.grain {
+  z-index: 401;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 140px 140px;
+  animation: grain-shift 5.6s steps(6) infinite;
+}
+@keyframes grain-shift {
+  0%   { background-position: 0 0; }
+  16%  { background-position: -28px 22px; }
+  33%  { background-position: 22px -18px; }
+  50%  { background-position: -16px 28px; }
+  66%  { background-position: 28px 16px; }
+  83%  { background-position: -22px -28px; }
+  100% { background-position: 0 0; }
+}
+
+/* ============================================================
+   HERO ATMOSPHERE — orbs, orbit ring, hairlines.
+   Absolutely positioned inside the hero, behind the type stack.
+   The hero keeps its own .hero__glow (driven by hero.js); these
+   only add depth around it. Alignment is untouched.
+   ============================================================ */
+.hero { isolation: isolate; }                 /* scope the z-stack to the hero */
+.hero > * { z-index: 1; }                      /* content sits above the atmosphere */
+/* keep the decorative layers OUT of grid flow (absolute) so they
+   don't occupy a row and push the centered content down */
+.hero__glow {
+  position: absolute; z-index: 0;
+  /* evolve like a real light source — slight brightness drift + a
+     tiny colour-temperature shift. Animates `filter` only, so it
+     composes with the pointer/scroll transform+opacity from hero.js */
+  animation: glow-evolve 17s ease-in-out infinite;
+}
+@keyframes glow-evolve {
+  0%,100% { filter: blur(45px) brightness(0.94) hue-rotate(-4deg) saturate(0.98); }
+  50%     { filter: blur(45px) brightness(1.13) hue-rotate(5deg)  saturate(1.05); }
+}
+.hero__atmos { z-index: 0; }
+
+.hero__atmos {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  overflow: hidden;              /* clip the haze so it never causes page scroll */
+}
+
+/* Secondary glow orbs — complement the primary hero glow */
+.hero__orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  will-change: transform;
+}
+.hero__orb--1 {
+  width: 340px; height: 340px;
+  top: 8%; left: 12%;
+  background: rgba(106, 165, 255, 0.12);
+  animation: orb-a 22s var(--ease-inout) infinite alternate;
+}
+.hero__orb--2 {
+  width: 300px; height: 300px;
+  bottom: 6%; right: 14%;
+  background: rgba(61, 123, 255, 0.10);
+  animation: orb-b 26s var(--ease-inout) infinite alternate;
+}
+@keyframes orb-a {
+  0%   { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(40px, -30px, 0); }
+}
+@keyframes orb-b {
+  0%   { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-46px, 26px, 0); }
+}
+
+/* Atmospheric haze — soft animated light field behind the type.
+   Blends the orbit into the environment; drifts very slowly. */
+.hero__haze{
+
+    position:absolute;
+    inset:-18%;
+
+    background:
+
+        radial-gradient(circle at 34% 34%,
+            rgba(106,165,255,.08),
+            transparent 38%),
+
+        radial-gradient(circle at 66% 64%,
+            rgba(61,123,255,.06),
+            transparent 42%),
+
+        radial-gradient(circle at 50% 24%,
+            rgba(255,255,255,.03),
+            transparent 34%),
+
+        radial-gradient(circle at 50% 76%,
+            rgba(106,165,255,.03),
+            transparent 40%);
+
+    mix-blend-mode:screen;
+
+    will-change:
+        transform,
+        opacity,
+        filter;
+
+    animation:
+        haze-drift 30s ease-in-out infinite alternate,
+        haze-breathe 20s ease-in-out infinite;
+
+}
+
+@keyframes haze-drift{
+
+    0%{
+
+        transform:
+            translate3d(0,0,0)
+            scale(1);
+
+    }
+
+    50%{
+
+        transform:
+            translate3d(2%,-1%,0)
+            scale(1.05);
+
+    }
+
+    100%{
+
+        transform:
+            translate3d(-2%,1%,0)
+            scale(1.08);
+
+    }
+
+}
+
+@keyframes haze-breathe{
+
+    0%,100%{
+
+        opacity:.82;
+
+    }
+
+    50%{
+
+        opacity:1;
+
+    }
+
+}
+
+/* Orbit ring — a faint circle with a slow lit arc raking its rim */
+.hero__ring {
+  position: absolute;
+  width: min(660px, 78vw);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Orbiters — small luminous bodies travelling the ring paths.
+   Each wrapper spins around the ring center; the orb sits on the
+   rim (::before) and drags a tangential fading trail (::after).
+   Speed / phase / size are per-instance custom properties. */
+.orbiter {
+  position: absolute;
+  inset: var(--inset, -1px);                    /* radius → inset (set in JS) */
+  border-radius: 50%;
+  pointer-events: none;
+  animation: ring-spin var(--dur, 30s) linear infinite;
+  animation-delay: var(--delay, 0s);
+  will-change: transform;
+  transition: filter 900ms var(--ease-out);     /* smooths the energise flash */
+}
+.orbiter--rev { animation-direction: reverse; }
+.orbiter--outer { inset: -13%; }               /* rides the outer hairline ring */
+.orbiter--inner { inset: 14%; }                /* rides an inner ring */
+/* occasional, non-synchronised brightening (toggled in JS) */
+.orbiter.is-flash { filter: brightness(1.9) saturate(1.08); }
+.orbiter::before {
+    content: "";
+    position: absolute;
+
+    top: 0;
+    left: 50%;
+
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: #D8E8FF;
+
+    transform: translate(-50%, -50%);
+
+    box-shadow:
+        0 0 8px rgba(106,165,255,.45),
+        0 0 18px rgba(106,165,255,.18);
+}
+
+/* Curved comet trail — a short arc that lies ON the orbit path and
+   trails the orb along the curve, as if the orb is energising the
+   orbit line: brightest at the orb, fading to nothing ~26° behind.
+   A conic gradient gives the taper; a radial mask keeps it to the
+   thin ring at the orbit radius so it hugs the exact curvature. */
+
+
+/* ============================================================
+   ORBIT PULSE (SVG) — the correct model: a short lit dash rides
+   the actual orbit circle (stroke-dasharray on a <circle>), like
+   an electrical pulse in a ring of wire. The dash IS a segment of
+   the circle, so it always follows the curvature exactly — never
+   a straight streak. A faint full circle draws the wire; the head
+   + two fainter trailing copies give the brightest-at-orb fade.
+   JS (initOrbitPulses) injects these and adds .svg-orbit to the
+   ring so the old CSS ring border / arc / orbiters step aside.
+   ============================================================ */
+
+.hero__ring::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(106, 165, 255, 0.22) 46deg,
+    rgba(255, 255, 255, 0.10) 62deg,
+    transparent 130deg,
+    transparent 360deg
+  );
+  -webkit-mask: radial-gradient(closest-side, transparent calc(100% - 1.5px), #000 calc(100% - 1.5px));
+          mask: radial-gradient(closest-side, transparent calc(100% - 1.5px), #000 calc(100% - 1.5px));
+  will-change: transform;
+  animation: none;
+}
+/* A second, larger hairline ring for depth */
+.hero__ring::after {
+  content: "";
+  position: absolute;
+  inset: -13%;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+}
+@keyframes ring-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Hairlines — decorative crosshair framing the composition */
+.hero__hairlines span{
+    position:absolute;
+    background:rgba(255,255,255,.04);
+    overflow:visible;
+}
+
+.hero__hairlines span:nth-child(1){
+    top:6%;
+    bottom:6%;
+    left:50%;
+    width:1px;
+    transform:translateX(-0.5px);
+}
+
+.hero__hairlines span:nth-child(2){
+    left:8%;
+    right:8%;
+    top:50%;
+    height:1px;
+    transform:translateY(-0.5px);
+}
+
+/* ==========================================================
+   HERO DATA STREAM
+========================================================== */
+
+.hero__streams{
+
+    position:absolute;
+    inset:0;
+
+    pointer-events:none;
+    overflow:hidden;
+
+}
+
+.comet {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+/* trail — a short streak of DISPERSED light: a soft gradient that
+   fades toward the tail, blurred so it never reads as a bar/rectangle.
+   --dir points the bright end toward the head; --blur varies per particle */
+.comet__tail {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: linear-gradient(var(--dir, 90deg),
+              transparent 0%,
+              rgba(150, 194, 255, 0.10) 34%,
+              rgba(190, 220, 255, 0.55) 100%);
+  filter: blur(var(--blur, 2px));
+  mix-blend-mode: screen;
+}
+/* head — a tiny, overexposed point of light with a soft bloom: the
+   strongest light source, sitting at the leading end (JS sets left/top) */
+.comet__head {
+  position: absolute;
+  width: var(--hs, 4px);
+  height: var(--hs, 4px);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle,
+              #f4f9ff 0%,
+              rgba(190, 220, 255, 0.9) 34%,
+              transparent 70%);
+  box-shadow:
+    0 0 4px 1px rgba(200, 224, 255, 0.9),
+    0 0 12px 4px rgba(130, 186, 255, 0.5),
+    0 0 26px 10px rgba(106, 165, 255, 0.22);
+  mix-blend-mode: screen;
+}
+
+/* ============================================================
+   CONTACT ATMOSPHERE — the hero's language, retuned. A slow
+   breathing glow, a lit orbit (spun the other way) with a few
+   orbiters, and soft drifting haze. Similar, not identical.
+   ============================================================ */
+.contact { isolation: isolate; }
+.contact > * { z-index: 1; }
+/* keep the glow out of grid flow (same fix as the hero) + breathe */
+.contact__glow {
+  position: absolute; z-index: 0;
+  animation: contact-breathe 10s var(--ease-inout) infinite;
+}
+@keyframes contact-breathe {
+  0%, 100% { opacity: 0.85; transform: translate(-50%, -50%) scale(1); }
+  50%      { opacity: 1;    transform: translate(-50%, -50%) scale(1.08); }
+}
+
+.contact__atmos {
+  position: absolute; inset: 0; z-index: 0;
+  display: grid; place-items: center;
+  pointer-events: none; overflow: hidden;
+}
+.contact__haze {
+  position: absolute; inset: -12%;
+  background:
+    radial-gradient(40% 32% at 50% 46%, rgba(106, 165, 255, 0.08), transparent 72%),
+    radial-gradient(34% 28% at 30% 60%, rgba(61, 123, 255, 0.05), transparent 74%),
+    radial-gradient(30% 26% at 72% 38%, rgba(160, 198, 255, 0.045), transparent 72%);
+  mix-blend-mode: screen;
+  will-change: transform, opacity;
+  animation: haze-drift 30s var(--ease-inout) infinite alternate;
+}
+/* main orbit — lit arc rakes counter to the hero's for variety */
+.contact__ring {
+  position: absolute;
+  width: min(760px, 88vw);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+.contact__ring::before {
+  content: "";
+  position: absolute; inset: -1px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 180deg,
+    transparent 0deg,
+    rgba(106, 165, 255, 0.20) 50deg,
+    rgba(255, 255, 255, 0.10) 66deg,
+    transparent 140deg,
+    transparent 360deg
+  );
+  -webkit-mask: radial-gradient(closest-side, transparent calc(100% - 1.5px), #000 calc(100% - 1.5px));
+          mask: radial-gradient(closest-side, transparent calc(100% - 1.5px), #000 calc(100% - 1.5px));
+  will-change: transform;
+  animation: ring-spin 50s linear infinite reverse;
+}
+/* a concentric inner hairline for depth */
+.contact__ring::after {
+  content: "";
+  position: absolute; inset: 14%;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.035);
+}
+
+/* ---- Stat count-up: keep digits from nudging the layout -------- */
+.stat-card strong { font-variant-numeric: tabular-nums; }
+
+/* ============================================================
+   ROTATING WORD — "…that people [remember]." The words stack in
+   one grid cell; the container's width eases between word widths
+   (measured by JS) so the sentence never jumps. Slow, masked
+   vertical slide with a whisper of blur.
+   ============================================================ */
+.rword {
+  display: inline-block;
+  white-space: nowrap;
+  text-align: left;
+  transition: width 620ms var(--ease-inout);
+  will-change: width;
+}
+.rword__w {
+  display: inline-block;
+  /* the active word gets a quiet identity: accent tint, soft glow,
+     a touch more weight — enough to feel intentional, not loud */
+  color: var(--accent);
+  font-weight: 650;
+  text-shadow: 0 0 22px rgba(106, 165, 255, 0.35);
+  will-change: opacity, transform, filter;
+}
+/* rest state = no class (opacity 1, no offset, no blur).
+   exit: fade + rise + soften. prime: jump below (no transition).
+   enter: settle up into place. No overflow mask → glyphs with
+   descenders (design, experience, share…) never clip. */
+.rword__w--exit {
+  opacity: 0;
+  transform: translateY(-0.42em);
+  filter: blur(4px);
+  transition: opacity 360ms var(--ease-inout),
+              transform 380ms var(--ease-inout),
+              filter 360ms var(--ease-inout);
+}
+.rword__w--prime {
+  opacity: 0;
+  transform: translateY(0.5em);
+  filter: blur(4px);
+  transition: none;
+}
+.rword__w--enter {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+  transition: opacity 520ms var(--ease-out),
+              transform 560ms var(--ease-out),
+              filter 460ms var(--ease-out);
+}
+.rword__measure {
+  position: absolute;
+  visibility: hidden;
+  white-space: nowrap;
+  pointer-events: none;
+  left: 0; top: 0;
+}
+
+/* ============================================================
+   Reduced motion / coarse pointer — freeze the atmosphere to a
+   calm static state. Nothing here is required to read the page.
+   ============================================================ */
+/* ============================================================
+   REFINEMENT PASS (2026-07-19) — name glow, orbit draw-in, cursor
+   spotlight, timeline marker, footer orbit, portrait grade.
+   ============================================================ */
+
+/* Breathing blue glow behind the hero name */
+.hero__title { position: relative; }
+.hero__title::before {
+  content: "";
+  position: absolute; inset: -55% -8% -40%;
+  z-index: -1;
+  background: radial-gradient(50% 58% at 50% 50%, rgba(106, 165, 255, 0.16), transparent 70%);
+  filter: blur(30px);
+  pointer-events: none;
+  animation: name-breathe 6.5s var(--ease-inout) infinite;
+}
+@keyframes name-breathe {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50%      { opacity: 1;   transform: scale(1.07); }
+}
+
+/* Orbit rings gently draw / materialise on first load */
+.hero__ring, .contact__ring {
+  animation: orbit-appear 1.7s var(--ease-out) 0.35s both;
+}
+@keyframes orbit-appear {
+  from { opacity: 0; transform: scale(0.82) rotate(-14deg); }
+  to   { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+/* Soft mouse-driven spotlight (hero + contact) — nearby light
+   leans toward the cursor. Kept almost invisible: large, faint,
+   slow to fade in and out. */
+.hero__spot, .contact__spot {
+  position: absolute; inset: 0;
+  pointer-events: none;
+  background: radial-gradient(440px circle at var(--sx, 50%) var(--sy, 50%),
+              rgba(120, 176, 255, 0.06), transparent 60%);
+  opacity: 0;
+  transition: opacity 900ms var(--ease-out);
+}
+.hero:hover .hero__spot,
+.contact:hover .contact__spot { opacity: 1; }
+
+/* Experience timeline — bring the first (current) marker to life */
+.timeline__item:first-child .timeline__marker::before {
+  animation: marker-pulse 3.6s var(--ease-inout) infinite;
+}
+@keyframes marker-pulse {
+  0%, 88% {
+    box-shadow:
+      0 0 0 0 rgba(106,165,255,0),
+      0 0 10px 1px rgba(106,165,255,.35);
+  }
+
+  94% {
+    box-shadow:
+      0 0 0 0 rgba(106,165,255,.65),
+      0 0 18px 4px rgba(106,165,255,1);
+  }
+
+  100% {
+    box-shadow:
+      0 0 0 10px rgba(106,165,255,0),
+      0 0 12px 2px rgba(106,165,255,.45);
+  }
+}
+.timeline__item:first-child .timeline__marker i {
+  position: relative;
+  background: linear-gradient(rgba(106, 165, 255, 0.55), var(--border-subtle) 72%);
+}
+.timeline__item:first-child .timeline__marker i::after {
+  content: "";
+  position: absolute; left: 50%; bottom: 0;
+  width: 3px; height: 16px; margin-left: -1.5px;
+  border-radius: 2px;
+  /* comet: bright at the leading (upper) edge, tail fading below */
+  background: linear-gradient(to top, transparent, rgba(190, 216, 255, 0.95));
+  box-shadow: 0 0 8px 1px rgba(106, 165, 255, 0.7);
+  animation: marker-particle 3.6s var(--ease-inout) infinite;
+}
+/* travels UPWARD — from the previous role toward the current one:
+   growth, progression, moving forward. Seamless (fades at both ends). */
+@keyframes marker-particle {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+
+  15% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-64px);
+    opacity: 0;
+  }
+}
+
+/* Footer orbit — echoes the hero at the close of every page */
+.site-footer { position: relative; overflow: hidden; }
+.footer-orbit {
+  position: absolute;
+  right: -130px; top: 50%;
+  width: 440px; height: 440px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  display: grid; place-items: center;
+  opacity: 0.65;
+}
+.footer-orbit__ring {
+  position: absolute;
+  width: 100%; aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+.footer-orbit__ring::before {
+  content: "";
+  position: absolute; inset: -1px; border-radius: 50%;
+  background: conic-gradient(from 0deg, transparent 0deg, rgba(106, 165, 255, 0.18) 44deg, transparent 120deg, transparent 360deg);
+  -webkit-mask: radial-gradient(closest-side, transparent calc(100% - 1.5px), #000 calc(100% - 1.5px));
+          mask: radial-gradient(closest-side, transparent calc(100% - 1.5px), #000 calc(100% - 1.5px));
+  animation: ring-spin 46s linear infinite;
+}
+
+/* About portrait — the exact Figma portrait, shown faithfully.
+   No colour grade so its own treatment is preserved; the hover
+   scale + reveal remain (defined in sections.css / base.css). */
+
+/* Softer section seams — dividers fade at the edges so sections
+   flow into one another instead of stacking as hard bands. */
+.experience, .brands, .toolkit, .philosophy,
+.proj, .page-cta, .site-footer, .bottom-bar {
+  border-top: 1px solid transparent;
+  border-image: linear-gradient(90deg,
+                transparent, var(--border-subtle) 16%,
+                var(--border-subtle) 84%, transparent) 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .atmos__ambient,
+  .atmos__travel,
+  .hero__orb,
+  .hero__haze,
+  .hero__ring::before,
+  .hero__title::before,
+  .hero__ring,
+  .contact__glow,
+  .contact__haze,
+  .contact__ring::before,
+  .contact__ring,
+  .timeline__item:first-child .timeline__marker::before,
+  .footer-orbit__ring::before,
+  .orbiter,
+  .orbit-svg .pulse,
+  .hero__glow,
+  .grain { animation: none; }
+  .atmos__travel { opacity: 0.6; }
+  .orbiter { display: none; }               /* no travelling bodies */
+  .timeline__item:first-child .timeline__marker i::after { display: none; }
+  .rword { transition: none; }
+  .rword__w--exit, .rword__w--prime, .rword__w--enter { transform: none; opacity: 1; filter: none; }
+}

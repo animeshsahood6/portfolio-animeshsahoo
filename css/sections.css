@@ -1,0 +1,330 @@
+/* ============================================================
+   SECTIONS — measurements transcribed from the Figma frames.
+   Landing (hero · work · skills) → About (intro · experience ·
+   brands · toolkit · philosophy) → Contact (CTA · bottom bar).
+   ============================================================ */
+
+.section {
+  max-width: calc(var(--page-max) + 2 * var(--page-pad));
+  margin-inline: auto;
+  padding-inline: var(--page-pad);
+}
+.section__head { display: grid; gap: 20px; }             /* Section Header: itemSpacing 20 */
+.section__title {
+  font-size: var(--fs-h2); line-height: var(--lh-h2);
+  letter-spacing: -0.015em;
+}
+.section__desc {
+  color: var(--text-secondary);
+  font-size: var(--fs-body-l); line-height: var(--lh-body-l);
+  max-width: 640px;                                       /* desc fixed width 640 */
+}
+
+/* HERO — refined composition (user-directed, 2026-07-19):
+   the whole content block sits at the visual center of the
+   viewport — and therefore at the center of the orbit — instead
+   of hanging below a fixed top padding. Type rhythm is tuned
+   per relationship rather than a uniform 28px gap. ------------- */
+.hero {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 0;
+  text-align: center;
+  max-width: calc(var(--page-max) + 2 * var(--page-pad));
+  margin-inline: auto;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: 96px var(--page-pad) 72px;
+  overflow: visible;
+}
+/* type rhythm: eyebrow↔heading tight · heading↔tagline moderate ·
+   tagline↔intro breathing · intro↔CTAs connected but distinct */
+.hero__title { margin-top: 18px; }
+.hero__tagline { margin-top: 26px; }
+.hero__intro { margin-top: 20px; }
+/* Glow: ellipse 1000×480, accent 14%, layer blur 200, y −80 */
+.hero__glow {
+  position: absolute;
+  left: 50%; top: 44%;
+  width: 600px; height: 300px;
+  margin-top: -150px;                /* centre the light behind the title */
+  max-width: 86vw;
+  transform: translateX(-50%);
+  /* layered ambient light rather than one visible ellipse: brightest
+     at the centre (behind the title), fading softly outward */
+  background:
+    radial-gradient(closest-side, rgba(106, 165, 255, 0.075), transparent 80%),
+    radial-gradient(42% 52% at 40% 40%, rgba(130, 182, 255, 0.045), transparent 72%),
+    radial-gradient(44% 55% at 64% 62%, rgba(61, 123, 255, 0.040), transparent 74%);
+  filter: blur(45px);
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+.hero > * { position: relative; }
+.hero__title {
+  font-size: var(--fs-display-xl); line-height: var(--lh-display-xl);
+  letter-spacing: -0.03em;
+  font-weight: 600;
+}
+.hero__tagline {
+  font-size: var(--fs-body-l); line-height: var(--lh-body-l);
+  color: var(--text-secondary);
+}
+.hero__intro {
+  font-size: var(--fs-body); line-height: var(--lh-body);
+  color: var(--text-tertiary);
+  max-width: 620px;                                       /* intro fixed width 620 */
+}
+.hero__actions {
+  display: flex; flex-wrap: wrap; gap: 16px;
+  justify-content: center;
+  margin-top: 40px;
+  padding-top: 0;
+}
+
+/* WORK — Landing/Selected Work: pt 40 pb 120, head→grid 56 ------ */
+.work { padding-top: 40px; padding-bottom: 120px; }
+.work .section__head { margin-bottom: 56px; }
+
+/* SKILLS — Landing/Skills: pt 96 pb 140, head→chips 48 ---------- */
+.skills { padding-top: 96px; padding-bottom: 140px; }
+.skills .section__head { margin-bottom: 48px; }
+
+/* ABOUT — About/Intro: pt 140 pb 96, portrait 520 gap 80 -------- */
+.about { padding-top: 140px; padding-bottom: 96px; }
+.about__grid {
+  display: grid;
+  grid-template-columns: 520px 1fr;
+  gap: 80px;
+  align-items: start;
+}
+.about__portrait {
+  position: relative;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+}
+.about__portrait img {
+  width: 100%;
+  aspect-ratio: 520 / 640;                                /* portrait 520×640 */
+  object-fit: cover;
+  transform: scale(1.02);
+  transition: transform 1200ms var(--ease-out);
+}
+.about__portrait:hover img { transform: scale(1.05); }
+.about__body { display: grid; gap: 28px; align-content: start; }  /* bio itemSpacing 28 */
+.about__title {
+  font-size: var(--fs-h1); line-height: var(--lh-h1);
+  letter-spacing: -0.02em;
+}
+.about__lede {
+  font-size: var(--fs-body-l); line-height: var(--lh-body-l);
+  color: var(--text-secondary);
+}
+.about__sub {
+  font-size: var(--fs-body); line-height: var(--lh-body);
+  color: var(--text-tertiary);
+}
+.about__stats { display: flex; gap: 24px; padding-top: 12px; }     /* stats gap 24 pt 12 */
+.stat-card {
+  flex: 1;
+  display: grid; gap: 6px;
+  padding: 24px 28px;
+  border-radius: var(--r-md);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+}
+.stat-card strong {
+  font-size: var(--fs-h3); line-height: var(--lh-h3);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.stat-card span {
+  font-size: var(--fs-body-s); line-height: var(--lh-body-s);
+  color: var(--text-secondary);
+}
+
+/* EXPERIENCE — About/Experience: py 80, border-top, gap 40 ------- */
+.experience {
+  padding-top: 80px; padding-bottom: 80px;
+  border-top: 1px solid var(--border-subtle);
+}
+.experience > .overline { margin-bottom: 40px; }
+.timeline { display: grid; gap: 8px; }                    /* timeline itemSpacing 8 */
+.timeline__item {
+  display: grid;
+  grid-template-columns: 88px 8px minmax(0, 1fr);         /* year 88 · marker · content */
+  gap: 32px;                                              /* Timeline Item itemSpacing 32 */
+}
+.timeline__year {
+  font-size: var(--fs-label); line-height: var(--lh-label);
+  font-weight: 500;
+  color: var(--accent);
+}
+.timeline__marker { display: grid; justify-items: center; gap: 8px; padding-top: 6px; }
+.timeline__marker::before {
+  content: "";
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.timeline__marker i {
+  width: 1.5px; height: 72px;
+  background: var(--border-subtle);
+}
+.timeline__content { display: grid; gap: 6px; align-content: start; }
+.timeline__content h3 {
+  font-size: var(--fs-title); line-height: var(--lh-title);
+  font-weight: 500;
+  letter-spacing: -0.005em;
+}
+.timeline__content p {
+  font-size: var(--fs-body-s); line-height: var(--lh-body-s);
+  color: var(--text-secondary);
+  max-width: 480px;                                       /* desc fixed width 480 */
+}
+
+/* BRANDS — About/Brands: py 72, border-top, gap 32 --------------- */
+.brands {
+  padding-top: 72px; padding-bottom: 72px;
+  border-top: 1px solid var(--border-subtle);
+}
+.brands > .overline { margin-bottom: 32px; }
+.brands__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.brands__row li {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.08em;                                 /* wordmarks: 18 SB +8% */
+  color: var(--text-tertiary);
+  white-space: nowrap;
+  transition: color var(--t-med) var(--ease-out);
+}
+.brands__row li:hover { color: var(--text-secondary); }
+
+/* TOOLKIT — About/Toolkit: py 80, border-top, groups gap 48 ------ */
+.toolkit {
+  display: grid; gap: 48px;
+  padding-top: 80px; padding-bottom: 80px;
+  border-top: 1px solid var(--border-subtle);
+}
+.toolkit__group { display: grid; gap: 16px; }
+
+/* PHILOSOPHY — About/Philosophy: py 120, border-top, centered ---- */
+.philosophy {
+  padding-top: 120px; padding-bottom: 120px;
+  border-top: 1px solid var(--border-subtle);
+  text-align: center;
+}
+.philosophy blockquote { display: grid; gap: 20px; justify-items: center; }
+.philosophy p {
+  font-size: var(--fs-h2); line-height: var(--lh-h2);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  max-width: 900px;                                       /* quote fixed width 900 */
+}
+.philosophy cite {
+  font-style: normal;
+  font-size: var(--fs-body-s); line-height: var(--lh-body-s);
+  color: var(--text-tertiary);
+}
+
+/* CONTACT — refined (2026-07-19): centered in the viewport over a
+   living orbital field, mirroring the hero's composition language. */
+.contact {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 32px;
+  text-align: center;
+  max-width: calc(var(--page-max) + 2 * var(--page-pad));
+  margin-inline: auto;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: 160px var(--page-pad) 160px;
+}
+/* Glow: ellipse 1000×460, accent 13%, centered */
+.contact__glow {
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 1000px; height: 460px;
+  max-width: 92vw;
+  transform: translate(-50%, -50%);
+  background: rgba(106, 165, 255, 0.13);
+  border-radius: 50%;
+  filter: blur(100px);
+  pointer-events: none;
+}
+.contact > * { position: relative; }
+.contact__title {
+  font-size: var(--fs-display-xl); line-height: var(--lh-display-xl);
+  letter-spacing: -0.03em;
+  font-weight: 600;
+  max-width: 1040px;                                      /* title fixed width 1040 */
+}
+.contact__sub {
+  font-size: var(--fs-body-l); line-height: var(--lh-body-l);
+  color: var(--text-secondary);
+  max-width: 640px;
+}
+.contact__actions {
+  display: flex; flex-wrap: wrap; gap: 16px;
+  justify-content: center;
+  padding-top: 24px;                                      /* contact-actions pt 24 */
+}
+
+/* BOTTOM BAR — Contact/bottom-bar: py 40, border-top -------------- */
+.bottom-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  max-width: calc(var(--page-max) + 2 * var(--page-pad));
+  margin-inline: auto;
+  padding: 40px var(--page-pad);
+  border-top: 1px solid var(--border-subtle);
+}
+.bottom-bar p {
+  font-size: var(--fs-body-s); line-height: var(--lh-body-s);
+  color: var(--text-tertiary);
+}
+.bottom-bar nav { display: flex; gap: 32px; }             /* links gap 32 */
+.bottom-bar nav a {
+  font-size: var(--fs-label-s); line-height: var(--lh-label-s);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--text-secondary);
+  transition: color var(--t-fast) var(--ease-out);
+}
+.bottom-bar nav a:hover { color: var(--text-primary); }
+
+/* TABLET — Figma 834 frame: single column, 40px margins ----------- */
+@media (max-width: 880px) {
+  .hero { padding-top: 88px; padding-bottom: 64px; }
+  .work { padding-top: 24px; padding-bottom: 96px; }
+  .about { padding-top: 96px; padding-bottom: 72px; }
+  .about__grid { grid-template-columns: 1fr; gap: 48px; }
+  .about__portrait { max-width: 520px; }
+  .contact { padding: 120px var(--page-pad) 120px; }
+}
+
+@media (max-width: 640px) {
+  .about__stats { flex-direction: column; }
+  .timeline__item { grid-template-columns: 8px minmax(0, 1fr); gap: 16px; }
+  .timeline__year { grid-column: 2; }
+  .timeline__marker { grid-row: 1 / span 2; }
+  .timeline__content { grid-column: 2; }
+  .brands__row { justify-content: flex-start; column-gap: 32px; row-gap: 16px; }
+  .hero__actions, .contact__actions { width: 100%; }
+  .hero__actions .btn--primary, .contact__actions .btn { width: 100%; justify-content: center; }
+  .bottom-bar { flex-direction: column; align-items: flex-start; }
+}

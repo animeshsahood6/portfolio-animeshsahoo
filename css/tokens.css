@@ -1,0 +1,91 @@
+/* ============================================================
+   TOKENS — mirrors the Figma "Tokens" variable collection.
+   Values are the Figma values. Desktop (1440) is exact;
+   the tablet override block maps to the Figma 834 frame.
+   ============================================================ */
+:root {
+  /* Color — Figma variables, verbatim */
+  --bg-primary: #0D0D0D;
+  --bg-secondary: #161616;
+  --bg-card: #1C1C1C;
+  --bg-elevated: #232323;
+  --text-primary: #FFFFFF;
+  --text-secondary: #A8A8A8;
+  --text-tertiary: #6E6E6E;
+  --accent: #6AA5FF;
+  --accent-deep: #3D7BFF;
+  --accent-glow: rgba(106, 165, 255, 0.35);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.14);
+  --overlay-glass: rgba(255, 255, 255, 0.04);
+
+  /* Space — 8pt system (space/1 … space/20) */
+  --s-1: 8px;  --s-2: 16px; --s-3: 24px; --s-4: 32px;
+  --s-5: 40px; --s-6: 48px; --s-8: 64px; --s-10: 80px;
+  --s-12: 96px; --s-15: 120px; --s-20: 160px;
+
+  /* Radius (radius/sm … radius/pill) */
+  --r-sm: 12px; --r-md: 20px; --r-lg: 24px; --r-xl: 28px; --r-pill: 999px;
+
+  /* Type — Figma text styles, exact */
+  --font: 'Inter', 'Inter var', system-ui, -apple-system, sans-serif;
+  --fs-display-xl: 88px;  --lh-display-xl: 96px;   /* Display/XL  −3%  */
+  --fs-display-l: 64px;   --lh-display-l: 72px;    /* Display/L   −2.5% */
+  --fs-h1: 48px;          --lh-h1: 56px;           /* Heading/H1  −2%  */
+  --fs-h2: 36px;          --lh-h2: 44px;           /* Heading/H2  −1.5% */
+  --fs-h3: 24px;          --lh-h3: 32px;           /* Heading/H3  −1%  */
+  --fs-title: 20px;       --lh-title: 28px;        /* Title/M     −0.5% */
+  --fs-body-l: 18px;      --lh-body-l: 30px;       /* Body/L */
+  --fs-body: 16px;        --lh-body: 26px;         /* Body/M */
+  --fs-body-s: 14px;      --lh-body-s: 22px;       /* Body/S */
+  --fs-label: 14px;       --lh-label: 20px;        /* Label/M (Medium) */
+  --fs-label-s: 12px;     --lh-label-s: 16px;      /* Label/S (+2%) */
+  /* Overline: 12/16 Semi Bold, +12%, uppercase */
+
+  /* Motion — enhancement layer only; never composition */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.44, 1);
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+  --t-fast: 200ms;
+  --t-med: 450ms;
+  --t-slow: 700ms;
+  --t-cine: 1000ms;
+  --stagger: 70ms;
+
+  /* Layout — 1440 frame: 64px margins, 1312 content */
+  --page-max: 1312px;
+  --page-pad: 64px;
+
+  /* Elevation — Figma effect styles */
+  --shadow-card: 0 12px 40px -8px rgba(0, 0, 0, 0.45);       /* Elevation/Card  */
+  --shadow-hover: 0 24px 64px -12px rgba(0, 0, 0, 0.55);     /* Elevation/Hover */
+  --glow-accent: 0 0 80px var(--accent-glow);                /* Glow/Accent     */
+
+  /* Glass — nav recipe: overlay-glass fill + 24px background blur */
+  --glass-bg: var(--overlay-glass);
+  --glass-blur: blur(24px);
+  --glass-border: var(--border-subtle);
+}
+
+/* Tablet — maps to the Figma 834 frame (40px margins, Display/L name) */
+@media (max-width: 880px) {
+  :root {
+    --page-pad: 40px;
+    --fs-display-xl: 64px; --lh-display-xl: 72px;
+    --fs-display-l: 48px;  --lh-display-l: 56px;
+    --fs-h1: 40px;         --lh-h1: 48px;
+    --fs-h2: 32px;         --lh-h2: 40px;
+  }
+}
+
+/* Small screens — proportional continuation of the tablet scale */
+@media (max-width: 480px) {
+  :root {
+    --page-pad: 20px;
+    --fs-display-xl: 44px; --lh-display-xl: 52px;
+    --fs-display-l: 36px;  --lh-display-l: 44px;
+    --fs-h1: 32px;         --lh-h1: 40px;
+    --fs-h2: 28px;         --lh-h2: 36px;
+    --fs-h3: 22px;         --lh-h3: 30px;
+  }
+}

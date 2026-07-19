@@ -1,0 +1,520 @@
+/* ============================================================
+   COMPONENTS — transcribed from the Figma component library:
+   Navigation · Button (Primary/Secondary/Ghost) · Tag ·
+   Skill Chip · Project Card · Project Overlay (adaptation of
+   the case-study pages) · Nav drawer
+   ============================================================ */
+
+/* NAV — Figma Navigation: px 64 py 20, glass, bottom hairline --- */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 1000;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px var(--page-pad);
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  border-bottom: 1px solid var(--border-subtle);
+  transform: translateY(0);
+  transition: transform var(--t-med) var(--ease-out), background var(--t-med) var(--ease-out);
+}
+.nav.is-hidden { transform: translateY(-100%); }
+.nav.is-scrolled { background: rgba(13, 13, 13, 0.72); }
+.nav__logo {
+  display: inline-flex; align-items: center; gap: 3px;    /* Logo: gap 3 */
+  font-size: 20px; line-height: 28px;
+  font-weight: 600;
+}
+.nav__logo .dot, .preloader__mark .dot { color: var(--accent); }
+.nav__right { display: flex; align-items: center; gap: 40px; }  /* Links: itemSpacing 40 */
+.nav__links { display: flex; align-items: center; gap: 40px; }
+.nav__links a {
+  position: relative;
+  font-size: var(--fs-label); line-height: var(--lh-label);
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: color var(--t-fast) var(--ease-out);
+}
+.nav__links a::after { content: none; }   /* replaced by the shared sliding indicator */
+.nav__links a:hover, .nav__links a.is-active { color: var(--text-primary); }
+/* one indicator that springs between the active / hovered link */
+.nav__indicator {
+  position: absolute; left: 0; bottom: -4px;
+  height: 2px; width: 0;
+  border-radius: 2px;
+  background: var(--accent);
+  box-shadow: 0 0 10px 1px rgba(106, 165, 255, 0.7),
+              0 0 2px rgba(106, 165, 255, 0.9);
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, width;
+  transition: transform 520ms var(--ease-spring),
+              width 520ms var(--ease-spring),
+              opacity 260ms var(--ease-out);
+}
+/* nav-cta: white pill, px 20 py 10 */
+.nav__cta {
+  display: inline-flex; align-items: center;
+  padding: 10px 20px;
+  border-radius: var(--r-pill);
+  background: var(--text-primary);
+  color: #0D0D0D;
+  font-size: var(--fs-label); line-height: var(--lh-label);
+  font-weight: 500;
+  transition: transform var(--t-med) var(--ease-spring), box-shadow var(--t-med) var(--ease-out);
+}
+.nav__cta:hover { box-shadow: 0 0 40px -6px rgba(255, 255, 255, 0.22); }
+.nav__cta:active { scale: 0.96; }
+.nav__toggle { display: none; }
+
+.nav-drawer {
+  position: fixed; inset: 0; z-index: 990;
+  display: grid; place-content: center;
+  background: rgba(13, 13, 13, 0.92);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  opacity: 0; visibility: hidden;
+  transition: opacity var(--t-med) var(--ease-inout), visibility var(--t-med);
+}
+.nav-drawer nav { display: grid; gap: 24px; text-align: center; }
+.nav-drawer a {
+  font-size: var(--fs-h2); line-height: var(--lh-h2);
+  font-weight: 600; letter-spacing: -0.015em;
+  color: var(--text-secondary);
+  opacity: 0; transform: translateY(24px);
+  transition: opacity var(--t-med) var(--ease-out), transform var(--t-med) var(--ease-out), color var(--t-fast);
+}
+.nav-drawer a:hover { color: var(--text-primary); }
+.nav-drawer.is-open { opacity: 1; visibility: visible; }
+.nav-drawer.is-open a { opacity: 1; transform: none; }
+.nav-drawer.is-open a:nth-child(1) { transition-delay: 60ms; }
+.nav-drawer.is-open a:nth-child(2) { transition-delay: 120ms; }
+.nav-drawer.is-open a:nth-child(3) { transition-delay: 180ms; }
+.nav-drawer.is-open a:nth-child(4) { transition-delay: 240ms; }
+
+@media (max-width: 880px) {
+  .nav__right { display: none; }
+  .nav__toggle {
+    display: grid; gap: 6px;
+    padding: 10px;
+  }
+  .nav__toggle span {
+    width: 22px; height: 1.5px;
+    background: var(--text-primary);
+    transition: transform var(--t-med) var(--ease-spring);
+  }
+  .nav__toggle[aria-expanded="true"] span:first-child { transform: translateY(3.75px) rotate(45deg); }
+  .nav__toggle[aria-expanded="true"] span:last-child { transform: translateY(-3.75px) rotate(-45deg); }
+}
+
+/* BUTTONS — Figma Button set: px 28 py 16, pill, gap 8 ---------- */
+.btn {
+  position: relative;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 16px 28px;
+  border-radius: var(--r-pill);
+  font-size: var(--fs-label); line-height: var(--lh-label);
+  font-weight: 500;
+  overflow: hidden;
+  transition: transform var(--t-med) var(--ease-spring),
+              translate 500ms var(--ease-spring),
+              scale var(--t-fast) var(--ease-spring),
+              background var(--t-fast) var(--ease-out),
+              border-color var(--t-fast) var(--ease-out),
+              box-shadow 600ms var(--ease-out);
+  will-change: transform;
+}
+/* hover lift lives on `translate` so it composes with the
+   magnetic effect (which writes `transform` inline) */
+.btn:hover { translate: 0 -3px; }
+.btn--ghost:hover { translate: 0 -2px; }
+.btn:active { scale: 0.96; translate: 0 -1px; }
+.btn__arrow { transition: transform var(--t-med) var(--ease-spring); }
+.btn:hover .btn__arrow { transform: translateX(4px); }
+.btn--primary::after, .btn--secondary::after {
+  content: "";
+  position: absolute; top: 0; bottom: 0;
+  left: -60%; width: 40%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.22), transparent);
+  transform: skewX(-18deg);
+  transition: left 700ms var(--ease-out);
+  pointer-events: none;
+}
+.btn--primary:hover::after, .btn--secondary:hover::after { left: 130%; }
+.btn--primary { background: var(--text-primary); color: #0D0D0D; }
+.btn--primary:hover {
+  box-shadow: 0 0 44px -6px rgba(255, 255, 255, 0.26),
+              0 14px 32px -14px rgba(0, 0, 0, 0.6);
+}
+.btn--secondary { background: var(--bg-elevated); border: 1px solid var(--border-strong); }
+.btn--secondary:hover {
+  border-color: rgba(106, 165, 255, 0.5);
+  box-shadow: 0 0 48px -12px rgba(106, 165, 255, 0.3),
+              0 14px 32px -14px rgba(0, 0, 0, 0.6);
+}
+.btn--ghost { padding-inline: 8px; color: var(--text-secondary); }   /* Ghost: px 8 */
+.btn--ghost:hover { color: var(--text-primary); }
+.btn--ghost .btn__arrow { color: var(--accent); }
+
+/* BRANDS MARQUEE — seamless slow scroll (landing + about) -------- */
+.brands-strip {
+  position: relative;
+  max-width: 100%;
+  padding: 44px 0;
+}
+.brands-strip::before, .brands-strip::after {
+  content: "";
+  position: absolute; left: var(--page-pad); right: var(--page-pad); height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-subtle) 20%, var(--border-subtle) 80%, transparent);
+}
+.brands-strip::before { top: 0; }
+.brands-strip::after { bottom: 0; }
+.marquee {
+  display: flex; width: 100%; overflow: hidden;
+  -webkit-mask: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+          mask: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+}
+.marquee__track {
+  display: flex; flex: 0 0 auto; align-items: center;
+  gap: 64px; padding-right: 64px;
+  animation: marquee-scroll 46s linear infinite;
+  will-change: transform;
+}
+.marquee:hover .marquee__track { animation-play-state: paused; }
+.marquee__track span {
+  white-space: nowrap;
+  font-size: 18px; font-weight: 600; letter-spacing: 0.08em;
+  color: var(--text-tertiary);
+  transition: color var(--t-med) var(--ease-out);
+}
+.marquee__track span:hover { color: var(--text-secondary); }
+@keyframes marquee-scroll { to { transform: translateX(-100%); } }
+@media (prefers-reduced-motion: reduce) {
+  .marquee__track { animation: none; }
+}
+
+/* TAG — Figma Tag: px 12 py 6, glass pill, Label/S -------------- */
+.tag {
+  display: inline-flex; align-items: center;
+  padding: 6px 12px;
+  border-radius: var(--r-pill);
+  background: var(--overlay-glass);
+  border: 1px solid var(--border-subtle);
+  font-size: var(--fs-label-s); line-height: var(--lh-label-s);
+  font-weight: 500; letter-spacing: 0.02em;
+  color: var(--text-secondary);
+}
+
+/* CHIPS — Figma Skill Chip: px 20 py 12, card pill, Label/M ------ */
+.chips { display: flex; flex-wrap: wrap; gap: 12px; }
+.chips li {
+  padding: 12px 20px;
+  border-radius: var(--r-pill);
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  font-size: var(--fs-label); line-height: var(--lh-label);
+  font-weight: 500;
+  transition: transform var(--t-fast) var(--ease-spring), border-color var(--t-fast) var(--ease-out);
+}
+.chips li:hover { transform: translateY(-2px); border-color: var(--border-strong); }
+
+/* PROJECT CARDS — Figma Project Card: 640w · media 340 · r24 ----- */
+.work-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;                                              /* grid gap 32 */
+}
+@media (max-width: 880px) { .work-grid { grid-template-columns: 1fr; } }
+
+.work-card {
+  position: relative;
+  --mx: 50%; --my: 50%;                                   /* cursor position */
+  border-radius: var(--r-lg);
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: var(--shadow-card);
+  transition: transform 380ms var(--ease-out),
+              border-color 380ms var(--ease-out),
+              box-shadow 380ms var(--ease-out);
+}
+.work-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(106, 165, 255, 0.3);
+  box-shadow: var(--shadow-hover),
+              0 0 0 1px rgba(106, 165, 255, 0.14),
+              0 18px 60px -22px rgba(106, 165, 255, 0.35);   /* blue edge glow */
+}
+/* cursor-reactive radial highlight — follows the pointer across the card */
+.work-card__spot {
+  position: absolute; inset: 0; z-index: 3;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 380ms var(--ease-out);
+  background: radial-gradient(260px circle at var(--mx) var(--my),
+              rgba(106, 165, 255, 0.16), transparent 62%);
+}
+.work-card:hover .work-card__spot { opacity: 1; }
+/* thin animated accent border that slowly rotates on hover */
+.work-card::after {
+  content: "";
+  position: absolute; inset: 0; z-index: 4;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(from var(--card-angle, 0deg),
+              transparent 0deg,
+              rgba(106, 165, 255, 0.55) 40deg,
+              transparent 120deg,
+              transparent 360deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 380ms var(--ease-out);
+  pointer-events: none;
+}
+.work-card:hover::after {
+  opacity: 1;
+  animation: card-border-spin 4.5s linear infinite;
+}
+@property --card-angle { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
+@keyframes card-border-spin { to { --card-angle: 360deg; } }
+.work-card__media {
+  position: relative;
+  aspect-ratio: 640 / 340;                                /* media height 340 @ 640 */
+  overflow: hidden;
+  background: var(--bg-secondary);
+}
+.work-card__media .cover {
+  position: absolute; inset: 0;
+  background-size: cover;
+  background-position: center top;
+  transform: scale(1.04);
+  transition: transform 1200ms var(--ease-out);
+  will-change: transform;
+}
+.work-card:hover .work-card__media .cover { transform: scale(1.1) translateY(-1.5%); }
+.work-card__media::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 55%, rgba(13, 13, 13, 0.55));
+  opacity: 0;
+  transition: opacity var(--t-slow) var(--ease-out);
+}
+.work-card:hover .work-card__media::after { opacity: 1; }
+.work-card__media::before {
+  content: "";
+  position: absolute; top: -20%; bottom: -20%;
+  left: -75%; width: 55%;
+  z-index: 2;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.07), transparent);
+  transform: skewX(-16deg);
+  transition: left 1100ms var(--ease-out);
+  pointer-events: none;
+}
+.work-card:hover .work-card__media::before { left: 140%; }
+
+/* content: pl/pr 32, pt 28, pb 32, gap 14 */
+.work-card__body {
+  display: grid; gap: 14px;
+  padding: 28px 32px 32px;
+}
+.work-card__meta { display: flex; justify-content: space-between; align-items: center; }
+.work-card__arrow {
+  font-size: var(--fs-h3); line-height: 1;
+  transition: transform var(--t-med) var(--ease-spring), color var(--t-fast);
+}
+.work-card:hover .work-card__arrow { transform: translateX(6px); color: var(--accent); }
+.work-card h3 {
+  font-size: var(--fs-h3); line-height: var(--lh-h3);
+  letter-spacing: -0.01em;
+}
+.work-card p {
+  color: var(--text-secondary);
+  font-size: var(--fs-body-s); line-height: var(--lh-body-s);
+}
+.cover--fallback {
+  display: grid; place-content: center;
+  color: var(--text-tertiary);
+  font-size: var(--fs-label-s);
+  letter-spacing: 0.1em; text-transform: uppercase;
+}
+
+/* PROJECT OVERLAY — adaptation of the Figma case-study pages ----- */
+.project-overlay {
+  position: fixed; inset: 0; z-index: 2500;
+  visibility: hidden;
+}
+.project-overlay.is-open { visibility: visible; }
+.project-overlay__backdrop {
+  position: absolute; inset: 0;
+  background: rgba(13, 13, 13, 0.7);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  opacity: 0;
+  transition: opacity var(--t-med) var(--ease-inout);
+}
+.project-overlay.is-open .project-overlay__backdrop { opacity: 1; }
+.project-overlay__panel {
+  position: absolute;
+  inset: clamp(8px, 2.5vh, 32px) clamp(8px, 4vw, 64px);
+  border-radius: var(--r-xl);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-strong);
+  overflow: hidden;
+  transform: translateY(6vh) scale(0.96);
+  opacity: 0;
+  transition: transform var(--t-slow) var(--ease-out), opacity var(--t-med) var(--ease-out);
+  will-change: transform, opacity;
+}
+.project-overlay.is-open .project-overlay__panel { transform: none; opacity: 1; }
+.project-overlay__close {
+  position: absolute; top: 20px; right: 20px; z-index: 5;
+  width: 44px; height: 44px;
+  display: grid; place-content: center;
+  border-radius: 50%;
+  background: rgba(13, 13, 13, 0.6);
+  border: 1px solid var(--border-strong);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  transition: transform var(--t-fast) var(--ease-spring), border-color var(--t-fast);
+}
+.project-overlay__close:hover { transform: rotate(90deg); border-color: var(--accent); }
+.project-overlay__scroll {
+  height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--bg-elevated) transparent;
+}
+
+.p-hero {
+  position: relative;
+  min-height: 46vh;
+  display: flex; align-items: flex-end;
+  padding: var(--s-8);
+  background: var(--bg-primary);
+  overflow: hidden;
+}
+.p-hero .cover {
+  position: absolute; inset: 0;
+  background-size: cover; background-position: center top;
+  transform: scale(1.06);
+  animation: p-hero-in 1400ms var(--ease-out) forwards;
+}
+@keyframes p-hero-in { to { transform: scale(1); } }
+.p-hero::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(13, 13, 13, 0.1), rgba(13, 13, 13, 0.82));
+}
+.p-hero__text { position: relative; z-index: 2; display: grid; gap: 12px; justify-items: start; }
+.p-hero__text h2 {
+  font-size: var(--fs-h1); line-height: var(--lh-h1);
+  letter-spacing: -0.02em;
+}
+.p-hero__text .lede {
+  max-width: 62ch;
+  color: var(--text-secondary);
+  font-size: var(--fs-body-l); line-height: var(--lh-body-l);
+}
+
+.p-meta {
+  position: sticky; top: 0; z-index: 4;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--s-3);
+  padding: var(--s-4) var(--s-8);
+  border-bottom: 1px solid var(--border-subtle);
+  background: rgba(22, 22, 22, 0.78);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+}
+.p-meta div { display: grid; gap: 4px; }
+.p-meta dt {
+  font-size: var(--fs-label-s); font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+.p-meta dd { font-size: var(--fs-body-s); color: var(--text-primary); }
+
+.p-process {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--s-4);
+  padding: var(--s-6) var(--s-8) 0;
+}
+@media (max-width: 1100px) { .p-process { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .p-process { grid-template-columns: 1fr; } }
+.p-process div {
+  display: grid; gap: 8px; align-content: start;
+  padding-left: var(--s-2);
+  border-left: 2px solid var(--border-subtle);
+  transition: border-color var(--t-slow) var(--ease-out);
+}
+.p-process div:hover { border-color: var(--accent); }
+.p-process dt {
+  font-size: var(--fs-label-s); font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--accent);
+}
+.p-process dd {
+  font-size: var(--fs-body-s); line-height: var(--lh-body-s);
+  color: var(--text-secondary);
+}
+
+.p-blocks { padding: var(--s-8) var(--s-8) var(--s-10); display: grid; gap: var(--s-6); }
+.p-block { display: grid; gap: 10px; border-top: 1px solid var(--border-subtle); padding-top: var(--s-5); }
+.p-block:first-child { border-top: 0; padding-top: 0; }
+.p-block h3 {
+  font-size: var(--fs-h3); line-height: var(--lh-h3);
+  letter-spacing: -0.01em;
+}
+.p-block p {
+  color: var(--text-secondary);
+  font-size: var(--fs-body); line-height: var(--lh-body);
+  max-width: 72ch;
+}
+.project-overlay.is-open .p-block,
+.project-overlay.is-open .p-process div {
+  animation: p-in 800ms var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 90ms + 250ms);
+}
+@keyframes p-in {
+  from { opacity: 0; transform: translateY(28px); filter: blur(4px); }
+  to { opacity: 1; transform: none; filter: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .project-overlay.is-open .p-block,
+  .project-overlay.is-open .p-process div { animation: none; }
+}
+
+.p-next {
+  width: calc(100% - 2 * var(--s-8));
+  text-align: left;
+  margin: 0 var(--s-8) var(--s-8);
+  padding: var(--s-5);
+  border-radius: var(--r-md);
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  display: flex; justify-content: space-between; align-items: center; gap: var(--s-3);
+  cursor: pointer;
+  transition: border-color var(--t-fast) var(--ease-out), transform var(--t-med) var(--ease-spring);
+}
+.p-next:hover { border-color: var(--accent); transform: translateY(-2px); }
+.p-next .overline { color: var(--text-tertiary); }
+.p-next strong { font-size: var(--fs-h3); font-weight: 600; }
+.p-next .work-card__arrow { color: var(--accent); }
+
+@media (max-width: 720px) {
+  .p-hero, .p-blocks { padding-inline: var(--s-3); }
+  .p-meta, .p-process { padding-inline: var(--s-3); }
+  .p-meta { position: static; }
+  .p-next { margin-inline: var(--s-3); width: calc(100% - 2 * var(--s-3)); }
+  .project-overlay__panel { inset: 8px; }
+}
+
+/* When the custom cursor is live, the native one steps aside */
+body.has-cursor, body.has-cursor * { cursor: none !important; }
