@@ -200,22 +200,19 @@
     gap: 48px;
     flex-wrap: wrap;
 
-    overflow: hidden;
+    overflow: visible;
 
     isolation: isolate;
 }
+
 .site-footer__streams {
-
     position: absolute;
-
     inset: 0;
-
-    pointer-events: none;
 
     overflow: hidden;
 
+    pointer-events: none;
     z-index: 0;
-
 }
 .site-footer__cta-text { position: relative; z-index: 1; display: grid; gap: 16px; max-width: 720px; }
 .site-footer__cta-title {
