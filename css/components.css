@@ -74,7 +74,13 @@
   -webkit-backdrop-filter: var(--glass-blur);
   backdrop-filter: var(--glass-blur);
   opacity: 0; visibility: hidden;
-  transition: opacity var(--t-med) var(--ease-inout), visibility var(--t-med);
+  /* visibility waits for the fade-out to finish (close), but flips
+     instantly on open (see .is-open below) so the drawer is
+     focusable the moment it starts fading in */
+  transition: opacity var(--t-med) var(--ease-inout), visibility 0s var(--t-med);
+  /* keep touch scrolling from chaining to the page behind (iOS) */
+  overscroll-behavior: contain;
+  touch-action: none;
 }
 .nav-drawer nav { display: grid; gap: 24px; text-align: center; }
 .nav-drawer a {
@@ -83,9 +89,15 @@
   color: var(--text-secondary);
   opacity: 0; transform: translateY(24px);
   transition: opacity var(--t-med) var(--ease-out), transform var(--t-med) var(--ease-out), color var(--t-fast);
+  /* invisible hit-area extension → comfortable touch target */
+  padding: 6px 20px;
+  margin: -6px -20px;
 }
 .nav-drawer a:hover { color: var(--text-primary); }
-.nav-drawer.is-open { opacity: 1; visibility: visible; }
+.nav-drawer.is-open {
+  opacity: 1; visibility: visible;
+  transition: opacity var(--t-med) var(--ease-inout), visibility 0s;
+}
 .nav-drawer.is-open a { opacity: 1; transform: none; }
 .nav-drawer.is-open a:nth-child(1) { transition-delay: 60ms; }
 .nav-drawer.is-open a:nth-child(2) { transition-delay: 120ms; }
@@ -97,6 +109,13 @@
   .nav__toggle {
     display: grid; gap: 6px;
     padding: 10px;
+    position: relative;
+  }
+  /* invisible hit-area extension → ≥44px touch target */
+  .nav__toggle::after {
+    content: "";
+    position: absolute;
+    inset: -8px;
   }
   .nav__toggle span {
     width: 22px; height: 1.5px;
@@ -292,9 +311,13 @@
   background-size: cover;
   background-position: center top;
   transform: scale(1.04);
-  transition: transform 1200ms var(--ease-out);
+  opacity: 0;
+  transition: transform 1200ms var(--ease-out),
+              opacity 500ms var(--ease-out);
   will-change: transform;
 }
+/* cover art fades in when its image has decoded — no hard pop */
+.work-card__media .cover.is-ready { opacity: 1; }
 .work-card:hover .work-card__media .cover { transform: scale(1.1) translateY(-1.5%); }
 .work-card__media::after {
   content: "";
@@ -516,5 +539,8 @@
   .project-overlay__panel { inset: 8px; }
 }
 
-/* When the custom cursor is live, the native one steps aside */
-body.has-cursor, body.has-cursor * { cursor: none !important; }
+/* When the custom cursor is live, the native one steps aside.
+   The class is set on <html> by a tiny pre-paint head snippet (and
+   confirmed by cursor.js), so there is no flash of the native cursor
+   while the module graph loads on each navigation. */
+html.has-cursor, html.has-cursor * { cursor: none !important; }

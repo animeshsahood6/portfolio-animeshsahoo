@@ -236,6 +236,9 @@
   font-weight: 500; letter-spacing: 0.02em;
   color: var(--text-secondary);
   transition: color var(--t-fast) var(--ease-out);
+  /* invisible hit-area extension → comfortable touch target */
+  padding: 14px 8px;
+  margin: -14px -8px;
 }
 .site-footer__links a:hover { color: var(--text-primary); }
 

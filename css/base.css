@@ -56,6 +56,26 @@ p { text-wrap: pretty; }
   border-radius: 4px;
 }
 
+/* Skip link — invisible until keyboard-focused ------------------ */
+.skip-link {
+  position: fixed;
+  top: 12px; left: 12px;
+  z-index: 5000;
+  padding: 12px 20px;
+  border-radius: var(--r-pill);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-strong);
+  color: var(--text-primary);
+  font-size: var(--fs-label); line-height: var(--lh-label);
+  font-weight: 500;
+  /* hidden by position only (not opacity/display) so it stays in the
+     accessibility tree and receives focus as the first tab stop */
+  transform: translateY(calc(-100% - 24px));
+}
+.skip-link:focus-visible {
+  transform: none;
+}
+
 /* Scroll progress hairline ------------------------------------- */
 .scroll-progress {
   position: fixed; top: 0; left: 0;
@@ -93,10 +113,26 @@ p { text-wrap: pretty; }
   transition: transform 300ms var(--ease-out);
 }
 body.is-loaded .preloader { opacity: 0; visibility: hidden; }
+/* Repeat in-session navigations skip the curtain entirely */
+.preloader--skip { display: none; }
+
+/* Safety net: if the module script fails to load or execute, an
+   inline fallback timer adds this class so content is never held
+   hostage behind the reveal system. */
+body.js-fallback .reveal,
+body.js-fallback [data-split] .split-line > span {
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+  transition: none !important;
+}
 
 /* Reveal system -------------------------------------------------- */
 .reveal {
-  opacity: 0;
+  /* 0.001, not 0: fully transparent nodes are pruned from the
+     accessibility tree, which would hide unrevealed content from
+     screen readers. Visually indistinguishable from 0. */
+  opacity: 0.001;
   transform: translateY(36px);
   filter: blur(6px);
   transition:
@@ -129,7 +165,9 @@ body.is-loaded .preloader { opacity: 0; visibility: hidden; }
 [data-split].is-in .split-line > span { transform: translateY(0); }
 
 /* Custom cursor --------------------------------------------------- */
-.cursor { position: fixed; top: 0; left: 0; z-index: 4000; pointer-events: none; }
+/* Hidden until the first mousemove: prevents the dot/ring flashing
+   at stale coordinates (top-left / centre) on page load. */
+.cursor { position: fixed; top: 0; left: 0; z-index: 4000; pointer-events: none; opacity: 0; }
 .cursor__dot, .cursor__ring, .cursor__label, .cursor__glow { position: fixed; top: 0; left: 0; }
 .cursor__dot {
   width: 6px; height: 6px;

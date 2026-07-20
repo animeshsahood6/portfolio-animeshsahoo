@@ -9,9 +9,15 @@ const STATES = ['is-hover', 'is-view', 'is-external', 'is-text'];
 
 export function initCursor() {
   const root = document.getElementById('cursor');
-  if (!root || !finePointer || reducedMotion) { root?.remove(); return; }
+  if (!root || !finePointer || reducedMotion) {
+    root?.remove();
+    // the head snippet may have hidden the native cursor pre-paint;
+    // if we're not running, hand the native cursor back
+    document.documentElement.classList.remove('has-cursor');
+    return;
+  }
 
-  document.body.classList.add('has-cursor');
+  document.documentElement.classList.add('has-cursor');
 
   const dot = root.querySelector('.cursor__dot');
   const ring = root.querySelector('.cursor__ring');
@@ -28,7 +34,14 @@ export function initCursor() {
 
   addEventListener('mousemove', (e) => {
     mx = e.clientX; my = e.clientY;
-    if (!visible) { rx = mx; ry = my; visible = true; root.style.opacity = 1; }
+    if (!visible) {
+      // appear exactly where the pointer is — no fly-in from stale coords
+      rx = mx; ry = my; gx = mx; gy = my;
+      visible = true; root.style.opacity = 1;
+      ring.style.translate = `${rx}px ${ry}px`;
+      label.style.translate = `${rx}px ${ry}px`;
+      glow.style.translate = `${gx}px ${gy}px`;
+    }
     dot.style.transform = `translate(${mx}px, ${my}px)`;
   }, { passive: true });
 
@@ -40,9 +53,15 @@ export function initCursor() {
     ry += (my - ry) * 0.16;
     gx += (mx - gx) * 0.09;
     gy += (my - gy) * 0.09;
-    ring.style.translate = `${rx}px ${ry}px`;
-    label.style.translate = `${rx}px ${ry}px`;
-    glow.style.translate = `${gx}px ${gy}px`;
+    // Dirty-checked: once the trail has settled on the pointer, stop
+    // touching styles so an idle page costs (almost) nothing per frame.
+    if (Math.abs(mx - rx) > 0.05 || Math.abs(my - ry) > 0.05) {
+      ring.style.translate = `${rx}px ${ry}px`;
+      label.style.translate = `${rx}px ${ry}px`;
+    }
+    if (Math.abs(mx - gx) > 0.05 || Math.abs(my - gy) > 0.05) {
+      glow.style.translate = `${gx}px ${gy}px`;
+    }
     requestAnimationFrame(loop);
   })();
 

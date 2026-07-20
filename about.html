@@ -6,6 +6,10 @@
   <meta name="description" content="About Animesh Sahoo - a multidisciplinary designer focused on branding, performance marketing, visual storytelling and AI-assisted creative systems.">
   <meta name="author" content="Animesh Sahoo">
   <meta name="theme-color" content="#0D0D0D">
+    <meta property="og:type" content="website">
+  <meta property="og:title" content="About - Animesh Sahoo">
+  <meta property="og:description" content="About Animesh Sahoo - a multidisciplinary designer focused on branding, performance marketing, visual storytelling and AI-assisted creative systems.">
+
   <title>About - Animesh Sahoo</title>
 
   <link rel="preconnect" href="https://rsms.me" crossorigin>
@@ -17,8 +21,29 @@
   <link rel="stylesheet" href="css/sections.css">
   <link rel="stylesheet" href="css/pages.css">
   <link rel="stylesheet" href="css/atmosphere.css">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+  <link rel="modulepreload" href="js/main.js">
+  <link rel="modulepreload" href="js/motion.js">
+  <link rel="modulepreload" href="js/cursor.js">
+  <link rel="modulepreload" href="js/nav.js">
+  <link rel="modulepreload" href="js/hero.js">
+  <link rel="modulepreload" href="js/projects.js">
+  <link rel="modulepreload" href="js/atmosphere.js">
+  <link rel="modulepreload" href="js/sound.js">
+
+  <script>if (matchMedia('(hover: hover) and (pointer: fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('has-cursor');</script>
+  <noscript><style>
+    .preloader { display: none; }
+    .reveal, [data-split] .split-line > span { opacity: 1 !important; transform: none !important; filter: none !important; }
+    .cursor { display: none; }
+    html, html * { cursor: auto !important; }
+  </style></noscript>
 </head>
 <body data-loading>
+
+<a class="skip-link" href="#top">Skip to content</a>
+
 
   <div class="atmos" aria-hidden="true">
     <div class="atmos__ambient"></div>
@@ -74,7 +99,7 @@
         </figure>
         <div class="about__body">
           <p class="overline reveal" data-reveal>About</p>
-          <h2 class="about__title" data-split>Curiosity fuels everything I create.</h2>
+          <h1 class="about__title" data-split>Curiosity fuels everything I create.</h1>
           <p class="about__lede reveal" data-reveal>I’m Animesh, a multidisciplinary designer focused on branding, performance marketing, visual storytelling, and AI-assisted creative systems. Over the past four years, I’ve worked across digital campaigns, real estate marketing, multimedia design, and product experiences - always combining strategy with execution.</p>
           <p class="about__sub reveal" data-reveal>Today, I design integrated campaigns and AI-powered creative workflows at E-Infra, helping transform ideas into scalable visual systems across marketing, sales, and digital experiences.</p>
           <div class="about__stats reveal" data-reveal>
@@ -173,9 +198,7 @@
       <div class="site-footer__actions">
         <a
   class="btn btn--primary"
-  href="https://mail.google.com/mail/?view=cm&fs=1&to=animeshsahood6@gmail.com&su=Let's%20Connect"
-  target="_blank"
-  rel="noopener noreferrer"
+  href="mailto:animeshsahood6@gmail.com?subject=Let%27s%20Connect"
   data-magnetic>
   Email <span class="btn__arrow">→</span>
 </a>
@@ -195,5 +218,18 @@
   </footer>
 
   <script type="module" src="js/main.js"></script>
+  <script>
+    // Rescue hatch: if the module graph ever fails to load or run,
+    // lift the preloader curtain and show all content un-animated.
+    setTimeout(function () {
+      var b = document.body;
+      if (b.hasAttribute('data-loading')) {
+        b.classList.add('is-loaded', 'js-fallback');
+        b.removeAttribute('data-loading');
+        document.documentElement.classList.remove('has-cursor');
+      }
+    }, 5000);
+  </script>
+
 </body>
 </html>

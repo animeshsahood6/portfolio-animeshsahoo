@@ -157,14 +157,36 @@
    don't occupy a row and push the centered content down */
 .hero__glow {
   position: absolute; z-index: 0;
-  /* evolve like a real light source — slight brightness drift + a
-     tiny colour-temperature shift. Animates `filter` only, so it
-     composes with the pointer/scroll transform+opacity from hero.js */
-  animation: glow-evolve 17s ease-in-out infinite;
 }
-@keyframes glow-evolve {
-  0%,100% { filter: blur(45px) brightness(0.94) hue-rotate(-4deg) saturate(0.98); }
-  50%     { filter: blur(45px) brightness(1.13) hue-rotate(5deg)  saturate(1.05); }
+/* evolve like a real light source — slight brightness drift + a tiny
+   colour-temperature shift. Implemented as an opacity crossfade
+   between two statically-graded copies of the same gradient: the
+   perceived light matches the old filter animation, but only
+   `opacity` animates (compositor-only, no per-frame re-filtering).
+   The parent's blur(45px) + hero.js transform/opacity still apply. */
+.hero__glow::before,
+.hero__glow::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: var(--glow-bg);
+  pointer-events: none;
+}
+.hero__glow::before {
+  filter: brightness(0.94) hue-rotate(-4deg) saturate(0.98);
+  animation: glow-xfade-a 17s ease-in-out infinite;
+}
+.hero__glow::after {
+  filter: brightness(1.13) hue-rotate(5deg) saturate(1.05);
+  opacity: 0;
+  animation: glow-xfade-b 17s ease-in-out infinite;
+}
+@keyframes glow-xfade-a {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0; }
+}
+@keyframes glow-xfade-b {
+  0%, 100% { opacity: 0; }
+  50%      { opacity: 1; }
 }
 .hero__atmos { z-index: 0; }
 
@@ -731,6 +753,18 @@
                 var(--border-subtle) 84%, transparent) 1;
 }
 
+/* Offstage sections (fully outside the viewport, flagged by the JS
+   motion governor) pause their decorative animation. Nothing visible
+   ever stops — the flag flips back just before a section re-enters. */
+.is-offstage,
+.is-offstage::before,
+.is-offstage::after,
+.is-offstage *,
+.is-offstage *::before,
+.is-offstage *::after {
+  animation-play-state: paused !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .atmos__ambient,
   .atmos__travel,
@@ -748,7 +782,11 @@
   .orbiter,
   .orbit-svg .pulse,
   .hero__glow,
+  .hero__glow::before,
+  .hero__glow::after,
   .grain { animation: none; }
+  .hero__glow::before { filter: none; }      /* static state matches the old reduced-motion glow */
+  .hero__glow::after { opacity: 0; }
   .atmos__travel { opacity: 0.6; }
   .orbiter { display: none; }               /* no travelling bodies */
   .timeline__item:first-child .timeline__marker i::after { display: none; }

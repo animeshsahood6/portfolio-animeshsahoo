@@ -50,7 +50,31 @@ export function splitLines() {
 }
 
 /* --- Scroll reveal observer ---------------------------------- */
+
+/* Settle an element into its revealed state with no animation —
+   used where choreography would read as a glitch (returning via
+   Back/Forward, deep links, keyboard focus into hidden content). */
+function revealInstant(el) {
+  const parts = [el, ...el.querySelectorAll('.split-line > span')];
+  parts.forEach((p) => { p.style.transitionDuration = '0s'; p.style.transitionDelay = '0s'; });
+  el.classList.add('is-in');
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    parts.forEach((p) => { p.style.transitionDuration = ''; p.style.transitionDelay = ''; });
+  }));
+}
+
 export function initReveals() {
+  const targets = [...document.querySelectorAll('[data-reveal], [data-split]')];
+
+  // Back/Forward returns to a page the visitor has already seen, with
+  // scroll restored mid-page: replaying entrances (and hiding content
+  // above the restored viewport) reads as the site forgetting them.
+  const navType = performance.getEntriesByType?.('navigation')?.[0]?.type;
+  if (navType === 'back_forward') {
+    targets.forEach(revealInstant);
+    return;
+  }
+
   const io = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (!entry.isIntersecting) return;
@@ -62,7 +86,22 @@ export function initReveals() {
     });
   }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
 
-  document.querySelectorAll('[data-reveal], [data-split]').forEach((el) => io.observe(el));
+  // Deep links (…#projects) land the viewport inside a section that is
+  // still hidden — settle that section instantly, animate the rest.
+  let anchored = null;
+  try { anchored = location.hash && document.querySelector(location.hash); } catch { /* invalid hash */ }
+
+  targets.forEach((el) => {
+    if (anchored && anchored.contains(el)) revealInstant(el);
+    else io.observe(el);
+  });
+
+  // Keyboard users can Tab into content the observer hasn't revealed
+  // yet — never leave a focus ring around invisible content.
+  document.addEventListener('focusin', (e) => {
+    const el = e.target.closest('[data-reveal], [data-split]');
+    if (el && !el.classList.contains('is-in')) revealInstant(el);
+  });
 
   // Stagger siblings inside grids automatically
   document.querySelectorAll('.work-grid, .toolkit').forEach((group) => {
@@ -81,6 +120,12 @@ export function initMagnetic() {
   document.querySelectorAll('[data-magnetic], [data-magnetic-soft]').forEach((el) => {
     const k = el.hasAttribute('data-magnetic-soft') ? strength.soft : strength[''];
     let raf = null;
+    let release = null;
+    el.addEventListener('mouseenter', () => {
+      // re-entering during the release spring: hand control straight
+      // back to the pointer instead of fighting the 500ms transition
+      if (release) { clearTimeout(release); release = null; el.style.transition = ''; }
+    });
     el.addEventListener('mousemove', (e) => {
       const r = el.getBoundingClientRect();
       const dx = e.clientX - (r.left + r.width / 2);
@@ -94,7 +139,7 @@ export function initMagnetic() {
       if (raf) cancelAnimationFrame(raf);
       el.style.transition = 'transform 500ms cubic-bezier(0.34, 1.4, 0.44, 1)';
       el.style.transform = '';
-      setTimeout(() => { el.style.transition = ''; }, 500);
+      release = setTimeout(() => { el.style.transition = ''; release = null; }, 500);
     });
   });
 }

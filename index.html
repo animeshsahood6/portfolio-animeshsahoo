@@ -22,8 +22,29 @@
   <link rel="stylesheet" href="css/sections.css">
   <link rel="stylesheet" href="css/pages.css">
   <link rel="stylesheet" href="css/atmosphere.css">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+  <link rel="modulepreload" href="js/main.js">
+  <link rel="modulepreload" href="js/motion.js">
+  <link rel="modulepreload" href="js/cursor.js">
+  <link rel="modulepreload" href="js/nav.js">
+  <link rel="modulepreload" href="js/hero.js">
+  <link rel="modulepreload" href="js/projects.js">
+  <link rel="modulepreload" href="js/atmosphere.js">
+  <link rel="modulepreload" href="js/sound.js">
+
+  <script>if (matchMedia('(hover: hover) and (pointer: fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('has-cursor');</script>
+  <noscript><style>
+    .preloader { display: none; }
+    .reveal, [data-split] .split-line > span { opacity: 1 !important; transform: none !important; filter: none !important; }
+    .cursor { display: none; }
+    html, html * { cursor: auto !important; }
+  </style></noscript>
 </head>
 <body data-loading>
+
+<a class="skip-link" href="#top">Skip to content</a>
+
 
   <!-- ============ ATMOSPHERE - Experience layer (never affects layout) ============ -->
   <div class="atmos" aria-hidden="true">
@@ -210,9 +231,7 @@
       <div class="site-footer__actions">
         <a
   class="btn btn--primary"
-  href="https://mail.google.com/mail/?view=cm&fs=1&to=animeshsahood6@gmail.com&su=Let's%20Connect"
-  target="_blank"
-  rel="noopener noreferrer"
+  href="mailto:animeshsahood6@gmail.com?subject=Let%27s%20Connect"
   data-magnetic>
   Email <span class="btn__arrow">→</span>
 </a>
@@ -232,5 +251,18 @@
   </footer>
 
   <script type="module" src="js/main.js"></script>
+  <script>
+    // Rescue hatch: if the module graph ever fails to load or run,
+    // lift the preloader curtain and show all content un-animated.
+    setTimeout(function () {
+      var b = document.body;
+      if (b.hasAttribute('data-loading')) {
+        b.classList.add('is-loaded', 'js-fallback');
+        b.removeAttribute('data-loading');
+        document.documentElement.classList.remove('has-cursor');
+      }
+    }, 5000);
+  </script>
+
 </body>
 </html>

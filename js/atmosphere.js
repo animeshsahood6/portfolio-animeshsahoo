@@ -53,6 +53,14 @@ function setupWordRotator(el) {
     .split(',').map((w) => w.trim()).filter(Boolean);
   if (!words.length) return;
 
+  // Screen readers get one stable word instead of a 3-second ticker:
+  // the animated span is decorative, a hidden sibling carries the text.
+  el.setAttribute('aria-hidden', 'true');
+  const sr = document.createElement('span');
+  sr.className = 'visually-hidden';
+  sr.textContent = words[0];
+  el.after(sr);
+
   el.textContent = '';
 
   // hidden probe used to measure each word's rendered width
@@ -75,8 +83,14 @@ function setupWordRotator(el) {
 
   let idx = 0;
   let busy = false;
+  let inView = true;
+  new IntersectionObserver((entries) => {
+    entries.forEach((entry) => { inView = entry.isIntersecting; });
+  }).observe(el);
+
   const cycle = () => {
-    if (busy) return;
+    // don't churn text + reflow while nobody can see it
+    if (busy || document.hidden || !inView) return;
     busy = true;
     const next = (idx + 1) % words.length;
 
@@ -266,14 +280,19 @@ export class DataStreamEngine {
     this.container = container;
     this.density = options.density ?? 1;
     this.alive = true;
+    this.inView = true;
     if (reducedMotion || !container) return;   // no streams under reduced motion
+    // don't spawn light into containers nobody can see
+    new IntersectionObserver((entries) => {
+      entries.forEach((entry) => { this.inView = entry.isIntersecting; });
+    }, { rootMargin: '160px' }).observe(container);
     this._loop = this._loop.bind(this);
     this._timer = setTimeout(this._loop, rand(400, 2800));   // stagger first spawn
   }
 
   _loop() {
     if (!this.alive) return;
-    this.spawn();
+    if (this.inView && !document.hidden) this.spawn();
     this._timer = setTimeout(this._loop, rand(3600, 12000) / this.density);
   }
 
@@ -354,4 +373,23 @@ export function initAtmosphereRhythm() {
     if (!ticking) { ticking = true; requestAnimationFrame(update); }
   }, { passive: true });
   update();
+}
+
+/* ============================================================
+   MOTION GOVERNOR — sections carrying always-on decorative
+   animation (orbits, marquees, pulses, glows) are paused while
+   fully offscreen. Nothing visible ever stops: the 160px margin
+   resumes motion just before a section re-enters the viewport.
+   ============================================================ */
+export function initMotionGovernor() {
+  const sections = document.querySelectorAll(
+    '.hero, .contact, .site-footer, .brands-strip, .brands, .experience, .page-cta'
+  );
+  if (!sections.length) return;
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      entry.target.classList.toggle('is-offstage', !entry.isIntersecting);
+    });
+  }, { rootMargin: '160px' });
+  sections.forEach((s) => io.observe(s));
 }

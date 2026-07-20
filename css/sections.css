@@ -53,8 +53,10 @@
   max-width: 86vw;
   transform: translateX(-50%);
   /* layered ambient light rather than one visible ellipse: brightest
-     at the centre (behind the title), fading softly outward */
-  background:
+     at the centre (behind the title), fading softly outward.
+     The gradient is painted by two pre-graded pseudo layers (see
+     atmosphere.css) so the light can evolve on the compositor. */
+  --glow-bg:
     radial-gradient(closest-side, rgba(106, 165, 255, 0.075), transparent 80%),
     radial-gradient(42% 52% at 40% 40%, rgba(130, 182, 255, 0.045), transparent 72%),
     radial-gradient(44% 55% at 64% 62%, rgba(61, 123, 255, 0.040), transparent 74%);
@@ -304,6 +306,9 @@
   letter-spacing: 0.02em;
   color: var(--text-secondary);
   transition: color var(--t-fast) var(--ease-out);
+  /* invisible hit-area extension → comfortable touch target */
+  padding: 14px 8px;
+  margin: -14px -8px;
 }
 .bottom-bar nav a:hover { color: var(--text-primary); }
 
